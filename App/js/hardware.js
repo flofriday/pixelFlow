@@ -43,7 +43,6 @@ function updateFrame(pixelList) {
       output += pixelList[c][r].color.substring(1)
     }
   }
-  console.log(output)
 
   // check if the instruction is too long / short
   if (output.length !== 1537) {
