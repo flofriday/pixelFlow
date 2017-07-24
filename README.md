@@ -8,7 +8,6 @@
   <p align="center">
     The open source platform for 16x16 pixel displays.
     <br>
-    <br>
     <a href="#status">Alpha-Stage</a>
     &middot;
     <a href="https://www.github.com/flofriday">flofriday</a>
@@ -27,19 +26,19 @@
 - [License](#license)
 
 ## Quick Start
-This platform is currently in a early alpha version so at the moment there isn't any
-way to start right away. So if your not a developer with way too much entusiasm
+This platform is currently in an early alpha version so at the moment there isn't any
+way to start right away. So if your, not a developer with way too much enthusiasm
 you shouldn't touch this repo yet.
 
 ### For Developers
 1. Download this repository.
-2. Go into the folder "Arduino" and upload the Code on a Arduino Mega.
+2. Go into the folder "Arduino" and upload the Code on an Arduino Mega.
 3. Go into the folder "App" and run `npm install`.
 4. Start the Software with `npm start`.
 
 ## Status
-This platform is currently in a early alpha version.
-At the Moment it isn't that usefull, even it's working it performs very poorly.
+This platform is currently in an early alpha version.
+At the Moment it isn't that useful, even though it's working, it performs very poorly.
 
 ## Software
 Documentation for the software will come soon.
@@ -56,6 +55,6 @@ Feel free to write issues.
 
 ## License
 The whole Platform is licensed under the [MIT License](LICENSE).
-This License is also used for the Firmware and Software with only one exeption.
+This License is also used for the Firmware and Software with only one exception.
 The file `App/js/html5kellycolorpicker.min.js` is licensed under GPLv3 and was
 written by ["NC22"](https://github.com/NC22/HTML5-Color-Picker).
