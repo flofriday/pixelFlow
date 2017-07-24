@@ -16,7 +16,6 @@
 
 
 ## Table of contents
-
 - [Quick start](#quick-start)
 - [Status](#status)
 - [Software](#software)
