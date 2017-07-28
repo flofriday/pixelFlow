@@ -10,152 +10,150 @@
 
 </head>
 
-<body>
-  <!-- Wrap your entire app inside .window -->
-  <div class="window" id="window">
+<!-- Wrap your entire app inside .window -->
+<div class="window" id="window">
+
+  <div class="window-content" id="window-content">
+
+    <div class="pane-group">
 
 
-
-    <div class="window-content" id="window-content">
-      <div class="pane-group">
-
-
-        <!-- The left bar-->
-        <div class="pane-sm sidebar" id="left-bar">
-          <ul class="list-group" id="pack-container">
-          </ul>
-        </div>
-
-
-        <!-- The middle bar-->
-        <div class="pane noscroll" id="middle-bar">
-          <div class="main-top">
-            <canvas id="matrix" width="1024" height="1024"></canvas>
-          </div>
-
-          <div id="frame-container" class="main-bottom">
-          </div>
-        </div>
-
-
-        <!-- The right bar-->
-        <div class="pane right noscroll" style="text-align: center" id="right-bar">
-          <canvas id="picker"></canvas><br>
-
-
-          <div class="btn-group color-buttons">
-            <button id="btn-brush" class="btn btn-default active">
-              <span class="icon icon-brush"></span>
-            </button>
-            <button id="btn-pinpete" class="btn btn-default">
-              <span class="icon icon-location"></span>
-            </button>
-            <button id="btn-text-frame" class="btn btn-default">
-              <span class="icon">
-                <strong>A</strong>
-              </span>
-            </button>
-            <button id="btn-fill-frame" class="btn btn-default">
-              <span class="icon icon-bucket"></span>
-            </button>
-            <button id="btn-clear-frame" class="btn btn-default">
-              <span class="icon icon-block"></span>
-            </button>
-          </div>
-
-          <input id="color"  class="form-control" value="#E91E63">
-
-          <form style="margin-top: 40px">
-            <div class="form-group" style="margin-top: 20px">
-              <label>Display Time in ms:</label>
-              <input id="input-time" type="number" class="form-control" value="200" min="0" max="60000" step="50">
-            </div>
-            <div class="form-group" style="margin-top: 20px">
-              <label>Brigthness (0 - 255):</label>
-              <input id="input-brightness" type="number" class="form-control" value="40" min="0" max="255" step="10">
-            </div>
-          </form>
-        </div>
-
-
+      <!-- The left bar-->
+      <div class="pane-sm sidebar" id="left-bar">
+        <ul class="list-group" id="pack-container">
+        </ul>
       </div>
+
+
+      <!-- The middle bar-->
+      <div class="pane noscroll" id="middle-bar">
+        <div class="main-top">
+          <canvas id="matrix" width="1024" height="1024"></canvas>
+        </div>
+
+        <div id="frame-container" class="main-bottom">
+        </div>
+      </div>
+
+
+      <!-- The right bar-->
+      <div class="pane right noscroll" style="text-align: center" id="right-bar">
+        <canvas id="picker"></canvas><br>
+
+
+        <div class="btn-group color-buttons">
+          <button id="btn-brush" class="btn btn-default active">
+            <span class="icon icon-brush"></span>
+          </button>
+          <button id="btn-pinpete" class="btn btn-default">
+            <span class="icon icon-location"></span>
+          </button>
+          <button id="btn-text-frame" class="btn btn-default">
+            <span class="icon">
+              <strong>A</strong>
+            </span>
+          </button>
+          <button id="btn-fill-frame" class="btn btn-default">
+            <span class="icon icon-bucket"></span>
+          </button>
+          <button id="btn-clear-frame" class="btn btn-default">
+            <span class="icon icon-block"></span>
+          </button>
+        </div>
+
+        <input id="color"  class="form-control" value="#E91E63">
+
+        <form style="margin-top: 40px">
+          <div class="form-group" style="margin-top: 20px">
+            <label>Display Time in ms:</label>
+            <input id="input-time" type="number" class="form-control" value="200" min="0" max="60000" step="50">
+          </div>
+          <div class="form-group" style="margin-top: 20px">
+            <label>Brigthness (0 - 255):</label>
+            <input id="input-brightness" type="number" class="form-control" value="40" min="0" max="255" step="10">
+          </div>
+        </form>
+      </div>
+
+
     </div>
-
-    <footer class="toolbar toolbar-footer">
-      <div class="toolbar-actions">
-
-        <div class="btn-group" style="margin-right: 50px;">
-          <button id="btn-save-pack" class="btn btn-default">
-            <span class="icon icon-floppy"></span>
-          </button>
-          <button id="btn-open-pack" class="btn btn-default">
-            <span class="icon icon-folder"></span>
-          </button>
-          <button id="btn-add-pack" class="btn btn-default">
-            <span class="icon icon-plus-squared"></span>
-          </button>
-          <button id="btn-copy-pack" class="btn btn-default">
-            <span class="icon icon-clipboard"></span>
-          </button>
-          <button id="btn-delete-pack" class="btn btn-default">
-            <span class="icon icon-trash"></span>
-          </button>
-        </div>
-
-
-        <div class="btn-group">
-          <button id="btn-add-frame" class="btn btn-default">
-            <span class="icon icon-plus-squared"></span>
-          </button>
-          <button id="btn-copy-frame" class="btn btn-default">
-            <span class="icon icon-clipboard"></span>
-          </button>
-          <button id="btn-delete-frame" class="btn btn-default">
-            <span class="icon icon-trash"></span>
-          </button>
-        </div>
-
-        <button  id="btn-bluetooth" class="btn btn-default">
-          <span class="icon icon-signal icon-text"></span>
-          Connect
-        </button>
-
-        <div class="btn-group">
-          <button id="btn-about" class="btn btn-default">
-            <span class="icon icon-info-circled"></span>
-          </button>
-          <button id="btn-settings" class="btn btn-default">
-            <span class="icon icon-tools"></span>
-          </button>
-          <button id="btn-github" class="btn btn-default">
-            <span class="icon icon-github"></span>
-          </button>
-          <button  id="btn-developer" class="btn btn-default">
-            <span class="icon icon-code"></span>
-          </button>
-        </div>
-
-        <div class="btn-group pull-right">
-          <button id="btn-live-update" class="btn btn-default">
-            <span class="icon icon-eye"></span>
-          </button>
-          <button id="btn-loop-player" class="btn btn-default">
-            <span class="icon icon-loop"></span>
-          </button>
-          <button id="btn-play-player" class="btn btn-default">
-            <span class="icon icon-play"></span>
-          </button>
-        </div>
-
-      </div>
-    </footer>
-
   </div>
 
+  <footer class="toolbar toolbar-footer">
+    <div class="toolbar-actions">
 
-  <!-- Javascript -->
-  <script type="text/javascript" charset="utf-8" src="../js/html5kellycolorpicker.min.js"></script>
-  <script type="text/javascript" charset="utf-8" src="../js/index.js"></script>
+      <div class="btn-group" style="margin-right: 50px;">
+        <button id="btn-save-pack" class="btn btn-default">
+          <span class="icon icon-floppy"></span>
+        </button>
+        <button id="btn-open-pack" class="btn btn-default">
+          <span class="icon icon-folder"></span>
+        </button>
+        <button id="btn-add-pack" class="btn btn-default">
+          <span class="icon icon-plus-squared"></span>
+        </button>
+        <button id="btn-copy-pack" class="btn btn-default">
+          <span class="icon icon-clipboard"></span>
+        </button>
+        <button id="btn-delete-pack" class="btn btn-default">
+          <span class="icon icon-trash"></span>
+        </button>
+      </div>
+
+
+      <div class="btn-group">
+        <button id="btn-add-frame" class="btn btn-default">
+          <span class="icon icon-plus-squared"></span>
+        </button>
+        <button id="btn-copy-frame" class="btn btn-default">
+          <span class="icon icon-clipboard"></span>
+        </button>
+        <button id="btn-delete-frame" class="btn btn-default">
+          <span class="icon icon-trash"></span>
+        </button>
+      </div>
+
+      <button  id="btn-bluetooth" class="btn btn-default">
+        <span class="icon icon-signal icon-text"></span>
+        Connect
+      </button>
+
+      <div class="btn-group">
+        <button id="btn-about" class="btn btn-default">
+          <span class="icon icon-info-circled"></span>
+        </button>
+        <button id="btn-settings" class="btn btn-default">
+          <span class="icon icon-tools"></span>
+        </button>
+        <button id="btn-github" class="btn btn-default">
+          <span class="icon icon-github"></span>
+        </button>
+        <button  id="btn-developer" class="btn btn-default">
+          <span class="icon icon-code"></span>
+        </button>
+      </div>
+
+      <div class="btn-group pull-right">
+        <button id="btn-live-update" class="btn btn-default">
+          <span class="icon icon-eye"></span>
+        </button>
+        <button id="btn-loop-player" class="btn btn-default">
+          <span class="icon icon-loop"></span>
+        </button>
+        <button id="btn-play-player" class="btn btn-default">
+          <span class="icon icon-play"></span>
+        </button>
+      </div>
+
+    </div>
+  </footer>
+
+</div>
+
+
+<!-- Javascript -->
+<script type="text/javascript" charset="utf-8" src="../js/html5kellycolorpicker.min.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/index.js"></script>
 
 </body>
 </html>

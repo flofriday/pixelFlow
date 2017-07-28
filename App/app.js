@@ -47,6 +47,7 @@ function createWindow () {
     icon: getIconPath(),
     backgroundColor: '#ffffff',
     title: "pixelFlow",
+    frame: true,
     webPreferences: {
       webgl: false,
       webaudia: false
