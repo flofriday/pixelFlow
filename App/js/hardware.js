@@ -11,7 +11,7 @@ function setLiveUpdate(state) {
 function updatePixel(row, col, color) {
   if (liveUpdate !== true) {return}
 
-  var firstByte = '4'
+  var firstByte = '2'
   var output = ''
   row = 15 - row
   row = row.toString(16)
@@ -34,7 +34,7 @@ function updatePixel(row, col, color) {
 function updateFrame(pixelList) {
   if (liveUpdate !== true) {return}
 
-  var firstByte = '1'
+  var firstByte = '3'
   var output = firstByte
 
   // Create the output string
@@ -60,7 +60,7 @@ function updateFrame(pixelList) {
 
 function updateBrightness(brightness) {
   if (liveUpdate !== true) {return}
-  var firstByte = '0'
+  var firstByte = '1'
   var output = '' + brightness
 
   // so the instruction has the needed length
