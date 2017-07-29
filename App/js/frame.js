@@ -128,9 +128,10 @@ function addCurFrame() {
 }
 
 function copyCurFrame() {
+  updateFrame();
+  spawnFrameUI();
   var newframe = JSON.parse(JSON.stringify(frameList[frameSelected]))
   frameList.splice(frameSelected + 1, 0, newframe)
-  spawnFrameUI()
   changeSelectedFrame(frameSelected + 1)
 }
 

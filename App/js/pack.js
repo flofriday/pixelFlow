@@ -181,6 +181,7 @@ function addCurPack() {
 }
 
 function copyCurPack() {
+  updatePack()
   var newPack = JSON.parse(JSON.stringify(packList[packSelected]));
   packList.splice(packSelected + 1, 0, newPack)
   spawnPackUI(packSelected + 1, packDefaultName, packDefaultType)
