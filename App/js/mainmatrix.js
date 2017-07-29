@@ -10,7 +10,7 @@ const hardware = require('../js/hardware')
 var canvas = document.getElementById("matrix")
 var ctx = canvas.getContext("2d")
 var btnBrush = document.getElementById("btn-brush")
-var btnPinpete = document.getElementById("btn-pinpete")
+var btnPipette = document.getElementById("btn-pipette")
 var btnText = document.getElementById("btn-text-frame")
 var btnFillFrame = document.getElementById("btn-fill-frame")
 var btnClearFrame = document.getElementById("btn-clear-frame")
@@ -22,22 +22,22 @@ var btnClearFrame = document.getElementById("btn-clear-frame")
 canvas.addEventListener("mousemove", mouseHandler, false)
 canvas.addEventListener("mousedown", mouseHandler, false)
 window.addEventListener('resize', resizeHandler, false)
-btnBrush.addEventListener("click", function(){activatePinpete(false)}, false)
-btnPinpete.addEventListener("click", function(){activatePinpete(true)}, false)
+btnBrush.addEventListener("click", function(){activatePipette(false)}, false)
+btnPipette.addEventListener("click", function(){activatePipette(true)}, false)
 btnFillFrame.addEventListener("mousedown", function(){fillPixels(colorSelected);}, false);
 btnClearFrame.addEventListener("mousedown", clearPixels, false);
 
-// Dealing with the pinpete
-var isPinpete = false
-function activatePinpete(input) {
+// Dealing with the pipette
+var isPipette = false
+function activatePipette(input) {
   if (input) {
-    isPinpete = true;
+    isPipette = true;
     btnBrush.classList.remove('active')
-    btnPinpete.classList.add('active')
+    btnPipette.classList.add('active')
   }
   else {
-    isPinpete = false;
-    btnPinpete.classList.remove('active')
+    isPipette = false;
+    btnPipette.classList.remove('active')
     btnBrush.classList.add('active')
   }
 }
@@ -61,13 +61,13 @@ function mouseHandler(e) {
   if (colum > 15) {colum = 15}
 
   /*
-  * Now we know which pixel but we don't know if the pinpete or the brush is
+  * Now we know which pixel but we don't know if the pipette or the brush is
   * selected. So lets do this
   */
-  if (isPinpete) {
+  if (isPipette) {
     if (e.buttons) {
       colorPicker.setColor(pixelList[colum][row].color)
-      activatePinpete(false)
+      activatePipette(false)
     }
   }
   else {
