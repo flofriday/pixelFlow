@@ -166,10 +166,9 @@ function showPack() {
   frame.loadFrameList(packList[packSelected].frameList)
 }
 
-var x = 0
 function spawnPack() {
   spawnPackUI(packUIContainer.children.length, packDefaultName, packDefaultType)
-  packList[packList.length] = new Pack(packDefaultName + (x++) , packDefaultPath, packDefaultBrightness, frame.getDefaultFrameList())
+  packList[packList.length] = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, frame.getDefaultFrameList())
   showPack()
 }
 
@@ -217,6 +216,4 @@ function changeSelectedPack(number) {
 }
 
 
-spawnPack()
-spawnPack()
 spawnPack()
