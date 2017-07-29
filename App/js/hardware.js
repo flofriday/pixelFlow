@@ -1,13 +1,31 @@
 const usb = require('../js/usb')
 //const bluetooth = require('../js/bluetooth')
+const matrix = require('../js/mainmatrix')
 
 var connection = 'usb';
 
-var liveUpdate = true
-function setLiveUpdate(state) {
-  liveUpdate = state;
+/*
+* Handle the DOM
+*/
+var btnLiveUpdate =  document.getElementById("btn-live-update")
+
+btnLiveUpdate.addEventListener("click", toggleLiveUpdate, false)
+
+var liveUpdate = false
+function toggleLiveUpdate() {
+  if (liveUpdate) {
+    liveUpdate = false;
+    btnLiveUpdate.classList.remove('active')
+  } else {
+    liveUpdate = true;
+    btnLiveUpdate.classList.add('active')
+    updateFrame(matrix.getPixelList())
+  }
 }
 
+/*
+* Functions to handle the Communication
+*/
 function updatePixel(row, col, color) {
   if (liveUpdate !== true) {return}
 
@@ -82,4 +100,3 @@ function updateBrightness(brightness) {
 module.exports.updatePixel = updatePixel
 module.exports.updateFrame = updateFrame
 module.exports.updateBrightness = updateBrightness
-module.exports.setLiveUpdate = setLiveUpdate
