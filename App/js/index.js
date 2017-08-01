@@ -71,7 +71,7 @@ function openAbout() {
 
   })
   win.loadURL(modalPath)
-  win.webContents.openDevTools()  // Only for debugging
+  //win.webContents.openDevTools()  // Only for debugging
   win.once('ready-to-show', function () { win.show() })
   //win.on('blur', function () { win.close() })
   win.on('close', function () { win = null })
