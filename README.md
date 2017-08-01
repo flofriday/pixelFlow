@@ -40,6 +40,7 @@ This platform is currently in an early alpha version.
 At the Moment it isn't that useful, even though it's working, it performs very poorly.
 
 ## Software
+!["Picture of Software"](Images/software.png)
 Documentation for the software will come soon.
 
 ## Hardware
