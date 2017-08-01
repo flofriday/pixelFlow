@@ -257,8 +257,16 @@ void loop()
     newByte = Serial.read();
     if (newByte != '\n')
     {
-      // Add the current character to the buffer and increase the position
-      buffer[bufferLength++] = newByte;
+      /*
+      * Check the length of the buffer. If it is longer than the buffer itself
+      * we must prevent a buffer-overflow. In that case we don't add the read
+      * character to the buffer.
+      */
+      if (bufferLength < BUFFER_SIZE)
+      {
+        // Add the current character to the buffer and increase the position
+        buffer[bufferLength++] = newByte;
+      }
     }
     else
     {
