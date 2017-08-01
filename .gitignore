@@ -6,3 +6,4 @@ todo.txt
 
 # The full css file for the photon framework (need only the minimal one)
 photon.css
+App/npm-debug.log
