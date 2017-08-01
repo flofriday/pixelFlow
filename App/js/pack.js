@@ -158,7 +158,7 @@ function loadFile(fileName) {
       else {
         type = "Picture"
       }
-      console.log("type: " + type)
+
       var newPack = new Pack(obj.name, fileName, obj.brightness, type, obj.frameList)
       packList.splice(packSelected + 1, 0, newPack)
       spawnPackUI(packSelected + 1, newPack.name, type)
@@ -232,7 +232,10 @@ function changeSelectedPack(number) {
 * Functions other modules need to interact with this module
 */
 function setTypeCurPack(input) {
+packList[packSelected].type = input
 
+// Change the text in the HTML
+packUIContainer.children[packSelected].children[1].children[1].textContent = input
 }
 
 module.exports.setTypeCurPack = setTypeCurPack

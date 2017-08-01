@@ -1,6 +1,7 @@
 /*
 * Include other modules
 */
+//const pack = require('../js/pack')
 const matrix = require('../js/mainmatrix')
 const biu = require('biu.js')
 
@@ -125,6 +126,7 @@ function addCurFrame() {
   frameList.splice(frameSelected + 1, 0, newframe)
   spawnFrameUI()
   changeSelectedFrame(frameSelected + 1)
+  if(frameList.length === 2) {pack.setTypeCurPack('Animation')}
 }
 
 function copyCurFrame() {
@@ -133,6 +135,7 @@ function copyCurFrame() {
   var newframe = JSON.parse(JSON.stringify(frameList[frameSelected]))
   frameList.splice(frameSelected + 1, 0, newframe)
   changeSelectedFrame(frameSelected + 1)
+  if(frameList.length === 2) {pack.setTypeCurPack('Animation')}
 }
 
 function deleteCurFrame() {
@@ -149,6 +152,7 @@ function deleteCurFrame() {
   }
   showFrame()
   removeFrameUI()
+  if(frameList.length === 1) {pack.setTypeCurPack('Picture')}
 }
 
 function changeSelectedFrame(number) {
