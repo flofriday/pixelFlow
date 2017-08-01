@@ -16,10 +16,13 @@ colorPicker.start()
 
 // Handle the DOM
 webFrame.setZoomFactor(1.25)
-var btnDeveloper = document.getElementById("btn-developer");
+var btnDeveloper = document.getElementById("btn-developer")
+var btnAbout = document.getElementById('btn-about')
 var allLinks = document.querySelectorAll('a[href]')
 
+
 btnDeveloper.addEventListener("click", function() {remote.getCurrentWindow().toggleDevTools();}, false);
+btnAbout.addEventListener("click", openAbout)
 document.addEventListener("keydown", globalKeyHandler, false);
 
 
@@ -51,3 +54,26 @@ Array.prototype.forEach.call(allLinks, function (link) {
     })
   }
 })
+
+
+// Create a new Window when the about button clicked
+const BrowserWindow = require('electron').remote.BrowserWindow
+const path = require('path')
+function openAbout() {
+  const modalPath = path.join('file://', __dirname, 'about.html')
+  let win = new BrowserWindow({
+    width: 600,
+    height: 450,
+    frame: false,
+    hide: true,
+    //resizable: false,
+    titleBarStyle: 'hidden',
+
+  })
+  win.loadURL(modalPath)
+  win.webContents.openDevTools()  // Only for debugging
+  win.once('ready-to-show', function () { win.show() })
+  //win.on('blur', function () { win.close() })
+  win.on('close', function () { win = null })
+  win.show()
+}
