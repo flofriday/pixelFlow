@@ -65,11 +65,11 @@ function removePackUI(index) {
 var packList = []
 var packSelected = 0
 var packDefaultType = "Picture"
-var packDefaultName = "New Pack"
+var packDefaultName = "New File"
 var packDefaultPath = null
 var packDefaultBrightness = 40
 var packDefaultFrameList = frame.getDefaultFrameList()
-function Pack(name, path, brightness, frameList) {
+function Pack(name, path, brightness, type, frameList) {
   this.name = name
   this.path = path
   this.brightness = brightness
@@ -79,8 +79,13 @@ function Pack(name, path, brightness, frameList) {
 // Open a save-dialog and save the pack
 function saveFile() {
   var index = packSelected
-  updatePack(packList[index])
-  var content = JSON.stringify(packList[index])
+  updatePack()
+
+  // Create the string to save
+  var content = JSON.parse(JSON.stringify(packList[index]))
+  delete content.path;
+  delete content.type;
+  content = JSON.stringify(content)
 
   // create the options for the dialog
   var options = {
@@ -145,10 +150,18 @@ function loadFile(fileName) {
       biu('Error at opening the file "' + fileName + '": ' + err, {type: 'danger', pop: true, el: document.getElementById('window')})
     }
     else {
-      var newPack = JSON.parse(data)
-      newPack.path = fileName
+      var obj = JSON.parse(data)
+      var type
+      if (obj.frameList.length > 2) {
+        type = "Animation"
+      }
+      else {
+        type = "Picture"
+      }
+      console.log("type: " + type)
+      var newPack = new Pack(obj.name, fileName, obj.brightness, type, obj.frameList)
       packList.splice(packSelected + 1, 0, newPack)
-      spawnPackUI(packSelected + 1, newPack.name, packDefaultType)
+      spawnPackUI(packSelected + 1, newPack.name, type)
       changeSelectedPack(packSelected + 1)
     }
   })
@@ -168,12 +181,12 @@ function showPack() {
 
 function spawnPack() {
   spawnPackUI(packUIContainer.children.length, packDefaultName, packDefaultType)
-  packList[packList.length] = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, frame.getDefaultFrameList())
+  packList[packList.length] = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, packDefaultType, frame.getDefaultFrameList())
   showPack()
 }
 
 function addCurPack() {
-  var newPack = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, frame.getDefaultFrameList())
+  var newPack = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, packDefaultType, frame.getDefaultFrameList())
   packList.splice(packSelected + 1, 0, newPack)
   spawnPackUI(packSelected + 1, packDefaultName, packDefaultType)
   changeSelectedPack(packSelected + 1)
@@ -214,6 +227,15 @@ function changeSelectedPack(number) {
   packUIContainer.children[packSelected].classList.add('active')
   showPack()
 }
+
+/*
+* Functions other modules need to interact with this module
+*/
+function setTypeCurPack(input) {
+
+}
+
+module.exports.setTypeCurPack = setTypeCurPack
 
 
 spawnPack()
