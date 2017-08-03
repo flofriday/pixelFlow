@@ -16,7 +16,6 @@
   "dependencies": {
     "biu.js": "^1.2.0",
     "electron": "^1.6.10",
-    "electron-titlebar": "0.0.3",
     "serialport": "^5.0.0-beta8"
   },
   "devDependencies": {
