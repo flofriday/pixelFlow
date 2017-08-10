@@ -64,22 +64,31 @@ Array.prototype.forEach.call(allLinks, function (link) {
 
 
 // Create a new Window when the about button clicked
+var aboutWinId = null
 function openAbout() {
+  // check if the aboutwindow is just in background
+  if (aboutWinId !== null)
+  {
+    //just focus the opend window
+    BrowserWindow.fromId(aboutWinId).focus()
+    return
+  }
+
   const modalPath = path.join('file://', __dirname, 'about.html')
   let win = new BrowserWindow({
     width: 600,
     height: 450,
     frame: false,
-    hide: true,
+    show: false,
     resizable: false,
+    minimizable: false,
     titleBarStyle: 'hidden',
   })
   win.loadURL(modalPath)
   //win.webContents.openDevTools()  // Only for debugging
   win.once('ready-to-show', function () { win.show() })
-  //win.on('blur', function () { win.close() })
-  win.on('close', function () { win = null })
-  win.show()
+  win.on('close', function () { win = null; aboutWinId = null })
+  aboutWinId = win.id
 }
 
 
@@ -104,16 +113,17 @@ function openConnection() {
   let win = new BrowserWindow({
     width: 600,
     height: 400,
-    hide: false,
+    resizable: false,
+    minimizable: false,
     title: "Select Hardware",
     icon: getIconPath(),
     backgroundColor: '#ffffff',
+    parent: BrowserWindow.getFocusedWindow(),
+    modal: true
   })
-  console.log(getIconPath())
   win.setMenu(null)
   win.loadURL(modalPath)
-  win.webContents.openDevTools()  // Only for debugging
-  win.once('ready-to-show', function () { win.show() })
+  //win.webContents.openDevTools()  // Only for debugging
+  //win.once('ready-to-show', function () { win.show() })
   win.on('close', function () { win = null })
-  win.show()
 }
