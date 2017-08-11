@@ -17,15 +17,15 @@
 
 
     <div class="window-content" id="window-content">
-      <table class="table-striped">
+      <table id="table" class="table-striped">
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Address</th>
+            <th>USB Name</th>
+            <th>Note</th>
           </tr>
         </thead>
-        <tbody>
-          <tr>
+        <tbody id="table-conntent">
+  <!--        <tr>
             <td>photon.css</td>
             <td>CSS</td>
           </tr>
@@ -40,7 +40,7 @@
           <tr>
             <td>photon.css</td>
             <td>CSS</td>
-          </tr>
+          </tr>-->
         </tbody>
       </table>
     </div>
@@ -48,13 +48,17 @@
     <footer class="toolbar toolbar-footer">
       <div class="toolbar-actions">
 
-        <button class="btn btn-default">
+        <button id="btn-close" class="btn btn-default">
             Cancel
           </button>
 
-          <button class="btn btn-primary pull-right">
+          <button id="btn-connect" class="btn btn-primary pull-right">
             Connect
           </button>
+
+          <button id="btn-refresh" class="btn btn-default pull-right" title="Refresh">
+              <span class="icon icon-cw"></span>
+            </button>
 
       </div>
     </footer>
