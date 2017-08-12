@@ -2,7 +2,7 @@ const usb = require('../js/usb')
 //const bluetooth = require('../js/bluetooth')
 const matrix = require('../js/mainmatrix')
 
-var connection = 'usb';
+var connection = null;
 
 /*
 * Handle the DOM
@@ -96,6 +96,12 @@ function updateBrightness(brightness) {
     // bluetooth.println(output)
   }
 }
+
+ipc.on('connect-usb', (event, input) => {
+  connection = 'usb'
+  usb.connect(input)
+  if (liveUpdate == true) {updateFrame(matrix.getPixelList())}
+})
 
 module.exports.updatePixel = updatePixel
 module.exports.updateFrame = updateFrame
