@@ -35,6 +35,11 @@ const fileTypes = [
     ending: '.html',
     type: 'Code'
   },
+  {
+    name: 'Markdown',
+    ending: '.md',
+    type: 'Code'
+  },
 
   /*
   * Style Languages
