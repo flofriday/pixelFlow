@@ -15,7 +15,7 @@
   "license": "MIT",
   "dependencies": {
     "biu.js": "^1.2.0",
-    "electron": "^1.6.10",
+    "electron": "^1.7.6",
     "serialport": "^5.0.0-beta8"
   },
   "devDependencies": {
