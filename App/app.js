@@ -3,7 +3,6 @@
 */
 const electron = require('electron')
 const app = electron.app
-const webContents = electron.webContents
 const os = require('os')
 const BrowserWindow = electron.BrowserWindow
 
@@ -46,8 +45,7 @@ function createWindow () {
     height: 800,
     icon: getIconPath(),
     backgroundColor: '#ffffff',
-    title: "pixelFlow",
-    frame: true
+    title: "pixelFlow"
   })
 
   // disable the default menu bar
@@ -66,19 +64,6 @@ function createWindow () {
     mainWindow = null
     app.quit()
   })
-
-
-  mainWindow.webContents.on('select-bluetooth-device', (event, deviceList, callback) => {
-    event.preventDefault()
-    let result = deviceList.find((device) => {
-      return device.deviceName === 'test'
-    })
-    if (!result) {
-      callback('')
-    } else {
-      callback(result.deviceId)
-    }
-  })
 }
 
 /*
@@ -87,7 +72,6 @@ function createWindow () {
 * Some APIs can only be used after this event occurs.
 */
 app.on('ready', createWindow)
-
 
 app.on('activate', function () {
   if (mainWindow === null) {
