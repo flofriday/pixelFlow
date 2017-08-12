@@ -18,6 +18,11 @@ overflow: hidden;
   overflow: auto;
 }
 
+tr.active {
+  color: #fff !important;
+  background-color: #116cd6 !important;
+}
+
 /* Some basic stuff */
 body {
   background-color: white;
