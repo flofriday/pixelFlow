@@ -116,7 +116,17 @@ function getIconPath() {
 
 
 // Create a new Window when the Connection button clicked
+var connectWinId = null
 function openConnection() {
+  // check if the connectionwindow is allready open
+  if (connectWinId != null)
+  {
+    //close the window
+    BrowserWindow.fromId(connectWinId).close()
+    connectWinId = null
+    return
+  }
+
   const modalPath = path.join('file://', __dirname, 'connection.html')
   let win = new BrowserWindow({
     width: 600,
@@ -133,5 +143,6 @@ function openConnection() {
   win.loadURL(modalPath)
   //win.webContents.openDevTools()  // Only for debugging
   //win.once('ready-to-show', function () { win.show() })
-  win.on('close', function () { win = null })
+  win.on('close', function () { win = null; connectWinId = null })
+  connectWinId = win.id
 }
