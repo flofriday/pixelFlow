@@ -1,6 +1,7 @@
 // load the app version
 var appInfo = require('../package')
 var electron = require('electron')
+var remote = electron.remote
 var shell = electron.shell
 var BrowserWindow = electron.remote.BrowserWindow
 
@@ -9,6 +10,16 @@ var versionElement = document.getElementById('version')
 var closeElement = document.getElementById('close')
 versionElement.innerText = appInfo.version
 const links = document.querySelectorAll('a[href]')
+
+document.addEventListener("keydown", globalKeyHandler)
+
+// Handle all key shortcuts
+function globalKeyHandler(e) {
+if(e.keyCode === 123) {
+    // Open Dev Tools
+    remote.getCurrentWindow().toggleDevTools()
+  }
+}
 
 // Open links in OS default Browser
 Array.prototype.forEach.call(links, function (link) {
