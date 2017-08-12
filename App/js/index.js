@@ -4,6 +4,7 @@ const remote = electron.remote
 const webFrame = electron.webFrame
 const shell = electron.shell
 const BrowserWindow = electron.remote.BrowserWindow
+const ipc = electron.ipcRenderer
 const os = require('os')
 const path = require('path')
 const matrix = require('../js/mainmatrix')
@@ -27,26 +28,33 @@ var btnBluetooth =document.getElementById('btn-bluetooth')
 var allLinks = document.querySelectorAll('a[href]')
 
 
-btnDeveloper.addEventListener("click", function() {remote.getCurrentWindow().toggleDevTools();}, false);
+btnDeveloper.addEventListener("click", function() {remote.getCurrentWindow().toggleDevTools()})
 btnAbout.addEventListener("click", openAbout)
 btnBluetooth.addEventListener("click", openConnection)
-document.addEventListener("keydown", globalKeyHandler, false);
+document.addEventListener("keydown", globalKeyHandler)
 
 
 // Handle all App shortcuts
 function globalKeyHandler(e) {
-  if (e.key === "+" && e.ctrlKey) {
+  if (e.key === "+" && (e.ctrlKey || e.metaKey)) {
+    // Zoom in
     webFrame.setZoomFactor(webFrame.getZoomFactor() + 0.25);
     if (webFrame.getZoomFactor() > 5) {webFrame.setZoomFactor(5)}
-    console.log("Zoom: " + (webFrame.getZoomFactor() * 100) + "%");
+    console.log("Zoom: " + (webFrame.getZoomFactor() * 100) + "%")
   }
-  else if (e.key === "-" && e.ctrlKey) {
+  else if (e.key === "-" && (e.ctrlKey || e.metaKey)) {
+    // Zoom out
     webFrame.setZoomFactor(webFrame.getZoomFactor() - 0.25);
     if (webFrame.getZoomFactor() < 0.25) {webFrame.setZoomFactor(0.25)}
-    console.log("Zoom: " + (webFrame.getZoomFactor() * 100) + "%");
+    console.log("Zoom: " + (webFrame.getZoomFactor() * 100) + "%")
   }
-  else if((e.key === "r" && e.ctrlKey) || e.keyCode === 116) {
+  else if((e.key === "r" && (e.ctrlKey || e.metaKey) ) || e.keyCode === 116) {
+    // Reload ouput
     hardware.updateFrame(matrix.getPixelList())
+  }
+  else if(e.keyCode === 123) {
+    // Open Dev Tools
+    remote.getCurrentWindow().toggleDevTools()
   }
 }
 
@@ -119,7 +127,7 @@ function openConnection() {
     icon: getIconPath(),
     backgroundColor: '#ffffff',
     parent: BrowserWindow.getFocusedWindow(),
-    modal: true
+    //modal: true
   })
   win.setMenu(null)
   win.loadURL(modalPath)
