@@ -34,7 +34,9 @@ a {
   cursor: pointer;
 }
 
+.btn,
 .btn * ,
+.btn-group,
 .btn-group *,
 button * {
     cursor: pointer;
@@ -94,6 +96,10 @@ button * {
 
 .noscroll {
   overflow: hidden;
+}
+
+.onhoverline:hover{
+  text-decoration: underline;
 }
 
 .bottom {
