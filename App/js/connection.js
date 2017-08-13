@@ -58,6 +58,12 @@ function loadDevices() {
       deviceList.push(port.comName)
       spawnDeviceUI(port.comName, port.manufacturer)
     })
+
+    // Error message if no ports found
+    if (ports.length === 0) {
+      spawnDeviceUI("<strong><i>No devices found!</i></strong>", null)
+    }
+
   })
 }
 
