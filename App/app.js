@@ -43,6 +43,8 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 1200,
     height: 800,
+    minWidth: 950,
+    minHeight: 650,
     icon: getIconPath(),
     backgroundColor: '#ffffff',
     title: "pixelFlow"
