@@ -137,12 +137,12 @@ function openConnection() {
     icon: getIconPath(),
     backgroundColor: '#ffffff',
     parent: BrowserWindow.getFocusedWindow(),
-    //modal: true
+    show: false
   })
   win.setMenu(null)
   win.loadURL(modalPath)
   //win.webContents.openDevTools()  // Only for debugging
-  //win.once('ready-to-show', function () { win.show() })
+  win.once('ready-to-show', function () { win.show() })
   win.on('close', function () { win = null; connectWinId = null })
   connectWinId = win.id
 }
