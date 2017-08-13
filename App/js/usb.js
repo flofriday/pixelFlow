@@ -1,12 +1,16 @@
 'use strict';
 const SerialPort = require('serialport');
+const biu = require('biu.js')
 
 
 var port = null
+var lastPortName = ""
 var isConnected = false
 
 function onOpen() {
-  console.log('Port \"' + port.path + '\" Open');
+  console.log('Connected to port \"' + port.path + '\"');
+  biu('Port \"' + port.path + '\" Open', {type: 'success', pop: true, el: document.getElementById('window')})
+  lastPortName = port.path
 }
 
 function onData(data) {
@@ -16,6 +20,7 @@ function onData(data) {
 
 function onClose() {
   console.log('port closed');
+  biu('Disconnected from port \"' + lastPortName + '\"', {type: 'danger',pop: true, el: document.getElementById('window')})
 }
 
 function onError(error) {
