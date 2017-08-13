@@ -146,3 +146,13 @@ function openConnection() {
   win.on('close', function () { win = null; connectWinId = null })
   connectWinId = win.id
 }
+
+// prevent electron from opening a droped file like html
+document.ondragover = document.ondrop = (ev) => {
+  ev.preventDefault()
+}
+
+document.body.ondrop = (ev) => {
+  pack.loadFile(ev.dataTransfer.files[0].path)
+  ev.preventDefault()
+}

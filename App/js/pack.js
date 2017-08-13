@@ -124,6 +124,9 @@ function saveFile() {
 function openFile() {
   var options = {
     title: 'Open a file',
+    filters: [
+      { name: 'pixelflow', extensions: ['pixelflow'] }
+    ],
     properties : [
       'openFile',
       'multiSelections',
@@ -144,6 +147,14 @@ function openFile() {
 
 // Load a file given the path as input
 function loadFile(fileName) {
+  // check for right file-type
+  if (path.extname(fileName).toLowerCase() !== '.pixelflow') {
+    // wrong fily-type
+    biu('The file "' + path.basename(fileName) + '" is not a .pixelflow file!', {type: 'danger', pop: true, el: document.getElementById('window')})
+    return
+  }
+
+
   fs.readFile(fileName, 'utf-8', function (err, data) {
     // error checking
     if (err) {
@@ -232,12 +243,13 @@ function changeSelectedPack(number) {
 * Functions other modules need to interact with this module
 */
 function setTypeCurPack(input) {
-packList[packSelected].type = input
+  packList[packSelected].type = input
 
-// Change the text in the HTML
-packUIContainer.children[packSelected].children[1].children[1].textContent = input
+  // Change the text in the HTML
+  packUIContainer.children[packSelected].children[1].children[1].textContent = input
 }
 
+module.exports.loadFile = loadFile
 module.exports.setTypeCurPack = setTypeCurPack
 
 
