@@ -1,7 +1,7 @@
 /* Modification on photon */
 
 .window-content {
-overflow: hidden;
+  overflow: hidden;
 }
 
 .pane:last-child {
@@ -39,7 +39,7 @@ a {
 .btn-group,
 .btn-group *,
 button * {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 /* Drawing a line between content and windowheader */
@@ -98,6 +98,14 @@ button * {
   overflow: hidden;
 }
 
+.hidden {
+display: none;
+}
+
+.blur {
+-webkit-filter:blur(4px);
+}
+
 .onhoverline:hover{
   text-decoration: underline;
 }
@@ -127,7 +135,7 @@ button * {
 }
 
 .main-bottom *{
-    display: inline-block;
+  display: inline-block;
 }
 
 #matrix {
@@ -164,6 +172,26 @@ div.frame.active {
   font-style: italic;
 }
 
+/* dragindicator */
+.drag-indicator {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(128, 128, 128, 0.6);
+}
+
+.drag-info {
+  position: absolute;
+  top: calc(50% - 45px);
+  bottom:  calc(50% - 45px);
+  left:  calc(50% - 190px);
+  right: calc(50% - 190px);
+  background: white;
+  border-radius: 5px;
+  text-align: center;
+}
 
 /* Slowly fade the content in at the startup */
 @keyframes fadein {
@@ -185,7 +213,7 @@ div.frame.active {
   height: 100%;
 
   /* Make sure this matches the native window background color that you pass to
-   * electron.BrowserWindow({...}), otherwise your app startup will look janky. */
+  * electron.BrowserWindow({...}), otherwise your app startup will look janky. */
   background: white;
 
   /* Smoother startup */

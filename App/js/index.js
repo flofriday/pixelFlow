@@ -147,12 +147,43 @@ function openConnection() {
   connectWinId = win.id
 }
 
-// prevent electron from opening a droped file like html
-document.ondragover = document.ondrop = (ev) => {
-  ev.preventDefault()
+// The drag and drop support
+var dragIndex = 0
+
+document.ondragenter = () => {
+  if (dragIndex == 0)
+  {
+    document.getElementById('drag-indicator').classList.remove('hidden')
+    document.getElementById('window').classList.add('blur')
+  }
+  dragIndex++
+  return false
 }
 
-document.body.ondrop = (ev) => {
-  pack.loadFile(ev.dataTransfer.files[0].path)
-  ev.preventDefault()
+document.ondragleave = () => {
+  dragIndex--
+  if (dragIndex == 0)
+  {
+    document.getElementById('drag-indicator').classList.add('hidden')
+    document.getElementById('window').classList.remove('blur')
+  }
+  return false
+}
+
+document.body.ondrop = (e) => {
+  e.preventDefault()
+  document.getElementById('drag-indicator').classList.add('hidden')
+  document.getElementById('window').classList.remove('blur')
+  dragIndex = 0
+
+  for(let i = 0; i < e.dataTransfer.files.length; i++)
+  {
+    pack.loadFile(e.dataTransfer.files[i].path)
+  }
+  return false
+}
+
+document.ondragover = document.ondrop = document.ondragend = (e) => {
+  e.preventDefault()
+  return false
 }
