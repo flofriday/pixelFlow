@@ -2,11 +2,11 @@
 const electron = require('electron')
 const remote = electron.remote
 const webFrame = electron.webFrame
-const shell = electron.shell
 const BrowserWindow = electron.remote.BrowserWindow
 const ipc = electron.ipcRenderer
 const os = require('os')
 const path = require('path')
+const windowConfig = require('../js/windowconfig')
 const matrix = require('../js/mainmatrix')
 matrix.start()  //start it up
 const frame = require('../js/frame')
@@ -52,23 +52,7 @@ function globalKeyHandler(e) {
     // Reload ouput
     hardware.updateFrame(matrix.getPixelList())
   }
-  else if(e.keyCode === 123) {
-    // Open Dev Tools
-    remote.getCurrentWindow().toggleDevTools()
-  }
 }
-
-
-// Open links in OS default browser instead of inside the electron app
-Array.prototype.forEach.call(allLinks, function (link) {
-  const url = link.getAttribute('href')
-  if (url.indexOf('http') === 0) {
-    link.addEventListener('click', function (e) {
-      e.preventDefault()
-      shell.openExternal(url)
-    })
-  }
-})
 
 
 // Create a new Window when the about button clicked
@@ -180,10 +164,5 @@ document.body.ondrop = (e) => {
   {
     pack.loadFile(e.dataTransfer.files[i].path)
   }
-  return false
-}
-
-document.ondragover = document.ondrop = document.ondragend = (e) => {
-  e.preventDefault()
   return false
 }

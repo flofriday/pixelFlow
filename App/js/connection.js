@@ -4,6 +4,7 @@ const ipc = electron.ipcRenderer
 const BrowserWindow = electron.remote.BrowserWindow
 const serialPort = require('serialport')
 const biu = require('biu.js')
+const windowConfig = require('../js/windowconfig')
 
 var btnClose = document.getElementById('btn-close')
 var btnConnect = document.getElementById('btn-connect')
@@ -29,10 +30,6 @@ function globalKeyHandler(e) {
   if((e.key === "r" && (e.ctrlKey || e.metaKey) ) || e.keyCode === 116) {
     // Reload devices
     loadDevices()
-  }
-  else if(e.keyCode === 123) {
-    // Open Dev Tools
-    remote.getCurrentWindow().toggleDevTools()
   }
 }
 
