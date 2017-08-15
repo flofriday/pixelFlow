@@ -14,7 +14,7 @@ const pack = require('../js/pack')
 const colorPicker = require('../js/colorpicker')
 const player = require('../js/player')
 const hardware = require('../js/hardware')
-
+const frameText = require('../js/frametext')
 
 
 // Set up colorpicker
