@@ -214,7 +214,7 @@ function copyCurPack() {
 function deleteCurPack() {
   // There musst be allways at least one frame
   if (packList.length <= 1) {
-    biu('There must be at least one pack.', {type: 'warning', pop: true, el: document.getElementById('window')})
+    biu('There must be at least one file open.', {type: 'warning', pop: true, el: document.getElementById('window')})
     return
   }
 
@@ -249,7 +249,11 @@ function setTypeCurPack(input) {
   packUIContainer.children[packSelected].children[1].children[1].textContent = input
 }
 
+module.exports.newFile = addCurPack
+module.exports.openFile = openFile
+module.exports.saveFile = saveFile
 module.exports.loadFile = loadFile
+module.exports.closeFile = deleteCurPack
 module.exports.setTypeCurPack = setTypeCurPack
 
 

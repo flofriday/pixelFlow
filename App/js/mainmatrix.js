@@ -24,8 +24,8 @@ canvas.addEventListener("mousedown", mouseHandler, false)
 window.addEventListener('resize', resizeHandler, false)
 btnBrush.addEventListener("click", function(){activatePipette(false)}, false)
 btnPipette.addEventListener("click", function(){activatePipette(true)}, false)
-btnFillFrame.addEventListener("mousedown", function(){fillPixels(colorSelected);}, false);
-btnClearFrame.addEventListener("mousedown", clearPixels, false);
+btnFillFrame.addEventListener("click", fillPixelsSelectedColor, false);
+btnClearFrame.addEventListener("click", clearPixels, false);
 
 // Dealing with the pipette
 var isPipette = false
@@ -149,6 +149,10 @@ function fillPixels(color){
   hardware.updateFrame(pixelList)
 }
 
+function fillPixelsSelectedColor() {
+  fillPixels(colorSelected)
+}
+
 function clearPixels(){
   fillPixels("#000000")
 }
@@ -223,6 +227,7 @@ module.exports.start = start
 module.exports.setColor = setColor
 module.exports.clearPixels = clearPixels
 module.exports.fillPixels = fillPixels
+module.exports.fillPixelsSelectedColor = fillPixelsSelectedColor
 module.exports.getContent = getContent
 module.exports.loadContent = loadContent
 module.exports.getPixelList = getPixelList

@@ -196,5 +196,8 @@ module.exports.changeSelectedFrame= changeSelectedFrame
 module.exports.getFrameListLength = getFrameListLength
 module.exports.getframeSelected = getframeSelected
 module.exports.getFrame = getFrame
+module.exports.newFrame = addCurFrame
+module.exports.copyFrame = copyCurFrame
+module.exports.deleteFrame = deleteCurFrame
 
 spawnFrame()

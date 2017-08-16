@@ -13,3 +13,5 @@ function enterText() {
 function drawText() {
 
 }
+
+module.exports.enterText = enterText

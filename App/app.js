@@ -5,6 +5,7 @@ const electron = require('electron')
 const app = electron.app
 const os = require('os')
 const BrowserWindow = electron.BrowserWindow
+const {Menu} = require('electron')
 
 /*
 * Keep a global reference of the window object, if you don't, the window will
@@ -52,11 +53,12 @@ function createWindow () {
 
   // disable the default menu bar
   mainWindow.setMenu(null)
+   //require('./js/app_menu')
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/html/index.html`)
 
-  // open dev tools (you can do this also in html only use it here if render.js breaks)
+  // open dev tools (you can do this also in html, only use it here if render.js breaks)
   //mainWindow.webContents.openDevTools()
 
 
@@ -66,6 +68,7 @@ function createWindow () {
     mainWindow = null
     app.quit()
   })
+
 }
 
 /*

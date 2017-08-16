@@ -15,6 +15,7 @@ const colorPicker = require('../js/colorpicker')
 const player = require('../js/player')
 const hardware = require('../js/hardware')
 const frameText = require('../js/frametext')
+const app_menu = require('../js/app_menu');
 
 
 // Set up colorpicker
