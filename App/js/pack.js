@@ -254,6 +254,7 @@ module.exports.openFile = openFile
 module.exports.saveFile = saveFile
 module.exports.loadFile = loadFile
 module.exports.closeFile = deleteCurPack
+module.exports.copyFile = copyCurPack
 module.exports.setTypeCurPack = setTypeCurPack
 
 

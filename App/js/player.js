@@ -75,3 +75,9 @@ function displayNextFrame() {
 function startPlayer() {
   setTimeout(displayNextFrame, frame.getFrame().time)
 }
+
+/*
+* Export the module
+*/
+module.exports.toggleLoop = toggleLoop
+module.exports.togglePlayPause = togglePlayPause

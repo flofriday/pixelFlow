@@ -5,9 +5,12 @@ const pack = require('../js/pack')
 const frame = require('../js/frame')
 const matrix = require('../js/mainmatrix')
 const frameText = require('../js/frametext')
+const player = require('../js/player')
+const hardware = require('../js/hardware')
+const windowMaker = require('../js/windowmaker')
 
 //const platform = process.platform
-const platform = 'darwin' // darwin, freebsd, linux, win32
+const platform = 'win32' // darwin, freebsd, linux, win32
 
 var template = []
 const name = 'pixelFlow'
@@ -20,7 +23,8 @@ if (platform == 'darwin') {
     label: name,
     submenu: [
       {
-        role: 'about'
+        lable: 'About ' + name,
+        click() { windowMaker.openAbout() }
       },
       {
         type: 'separator'
@@ -79,12 +83,11 @@ var fileMenu = {
     {
       label: 'Duplicate',
       accelerator: 'CmdOrCtrl+D',
-      click(){pack.saveFile()}
+      click(){pack.copyFile()}
     },
     /* TODO: Rename */
     {
       label: 'Close',
-      accelerator: 'CmdOrCtrl+W',
       click(){pack.closeFile()}
     }
   ]
@@ -95,6 +98,7 @@ if (platform != 'darwin') {
     type: 'separator'
   },
   {
+    label: 'Exit',
     accelerator: 'CmdOrCtrl+Q',
     role: 'quit'
   }
@@ -150,27 +154,27 @@ var deviceMenu = {
   submenu: [
     {
       label: 'Connect...',
-      click(){  }
+      click(){ windowMaker.openConnection() }
     },
     {
       label: 'Refresh Output',
       accelerator: 'CmdOrCtrl+R',
-      click() {}
+      click() { hardware.updateFrame(matrix.getPixelList()) }
     },
     {
       type: 'separator'
     },
     {
       label: 'Play / Pause',
-      click(){  }
+      click(){ player.togglePlayPause() }
     },
     {
       label: 'Toggle LiveUpdate',
-      click(){  }
+      click(){ hardware.toggleLiveUpdate() }
     },
     {
       label: 'Toggle Loop',
-      click(){  }
+      click(){ player.toggleLoop() }
     }
   ]
 }
@@ -267,7 +271,7 @@ if (platform != 'darwin') {
   },
   {
     label: 'About ' + name,
-    click () {}
+    click () { windowMaker.openAbout() }
   }
 )}
 template.push(helpMenu)

@@ -106,3 +106,4 @@ ipc.on('connect-usb', (event, input) => {
 module.exports.updatePixel = updatePixel
 module.exports.updateFrame = updateFrame
 module.exports.updateBrightness = updateBrightness
+module.exports.toggleLiveUpdate = toggleLiveUpdate
