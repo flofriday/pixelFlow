@@ -13,6 +13,7 @@ const app = require('electron').remote
 const dialog = app.dialog
 const fs = require('fs')
 const path = require('path')
+const shell = electron.shell
 
 /*
 * All DOM related stuff
@@ -262,6 +263,21 @@ function deleteCurPack() {
   packUIContainer.children[packSelected].classList.add('active')
 }
 
+// Open the filemanager in the directory where the current file is
+function showInManager() {
+  index = packSelected
+
+  // check if the path exists
+  if (fs.existsSync(packList[index].path) === false) {
+    // the path doesn't exist so drop an message
+    biu('File \"' + packList[index].name + '\" has not been saved yet.', {type: 'warning', pop: true, el: document.getElementById('window')})
+    return
+  }
+
+  // Open the filemanager
+  shell.showItemInFolder(packList[index].path)
+}
+
 function changeSelectedPack(number) {
   if (packUIContainer.children[packSelected].classList.contains('active'))
   {
@@ -291,6 +307,7 @@ module.exports.saveAsFile = saveAsFile
 module.exports.loadFile = loadFile
 module.exports.closeFile = deleteCurPack
 module.exports.copyFile = copyCurPack
+module.exports.showInManager = showInManager
 module.exports.setTypeCurPack = setTypeCurPack
 
 

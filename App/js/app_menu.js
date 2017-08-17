@@ -74,8 +74,6 @@ var fileMenu = {
       click(){pack.openFile()}
     },
     /* TODO: Open recent */
-    /* TODO: Open in explorer */
-    /* TODO: Save */
     {
       label: 'Save...',
       accelerator: 'CmdOrCtrl+S',
@@ -92,6 +90,24 @@ var fileMenu = {
       click(){pack.copyFile()}
     },
     /* TODO: Rename */
+    {
+      // Show in filemanager
+      label: (() => {
+        if (platform == 'darwin') {
+          // Finder for macOS
+          return 'Show in Finder...'
+        }
+        else if (platform == 'win32') {
+          // Explorer for windows
+          return 'Show in Explorer...'
+        }
+        else {
+          // Filemanager for linux and freebsd
+          return 'Show in Filemanager...'
+        }
+      })(),
+      click() { pack.showInManager() }
+    },
     {
       label: 'Close',
       click(){pack.closeFile()}
@@ -201,10 +217,12 @@ var viewMenu = {
       role: 'resetzoom'
     },
     {
-      role: 'zoomin'
+      role: 'zoomin',
+      accelerator: 'CmdOrCtrl+='
     },
     {
-      role: 'zoomout'
+      role: 'zoomout',
+      accelerator: 'CmdOrCtrl+-'
     },
     {
       type: 'separator'
