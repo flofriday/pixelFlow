@@ -59,7 +59,7 @@ function createWindow () {
   mainWindow.loadURL(`file://${__dirname}/html/index.html`)
 
   // open dev tools (you can do this also in html, only use it here if render.js breaks)
-  mainWindow.webContents.openDevTools()
+  //mainWindow.webContents.openDevTools()
 
 
   // Emitted when the window is closed.

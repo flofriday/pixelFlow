@@ -73,12 +73,18 @@ var fileMenu = {
       accelerator: 'CmdOrCtrl+O',
       click(){pack.openFile()}
     },
-    /* TODO: Open recent*/
-    /* TODO: Open in explorer*/
+    /* TODO: Open recent */
+    /* TODO: Open in explorer */
+    /* TODO: Save */
     {
-      label: 'Save As...',
+      label: 'Save...',
       accelerator: 'CmdOrCtrl+S',
       click(){pack.saveFile()}
+    },
+    {
+      label: 'Save As...',
+      accelerator: 'CmdOrCtrl+Shift+S',
+      click(){pack.saveAsFile()}
     },
     {
       label: 'Duplicate',

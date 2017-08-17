@@ -77,7 +77,7 @@ function Pack(name, path, brightness, type, frameList) {
 }
 
 // Open a save-dialog and save the pack
-function saveFile() {
+function saveAsFile() {
   var index = packSelected
   updatePack()
 
@@ -117,6 +117,41 @@ function saveFile() {
         biu('Saved successfully.', {type: 'success', pop: true, el: document.getElementById('window')})
       }
     })
+  })
+}
+
+// Save the file without a dialog
+function saveFile() {
+  var index = packSelected
+  updatePack()
+
+  // Create the string to save
+  var content = JSON.parse(JSON.stringify(packList[index]))
+  delete content.path;
+  delete content.type;
+  content = JSON.stringify(content)
+
+  // check if the path exists
+  if (fs.existsSync(packList[index].path) === false) {
+    // the path doesn't exist so do 'save as'
+    saveAsFile()
+    return
+  }
+
+  // check if the path is a file
+
+
+  // Save the file
+  fileName = packList[index].path
+  fs.writeFile(fileName, content, function (err) {
+    if(err){
+      biu('Error at saving file"' + packList[index].name + '": ' + err, {type: 'danger', pop: true, el: document.getElementById('window')})
+    }
+    else
+    {
+      packList[index].path = fileName
+      biu('Saved successfully.', {type: 'success', pop: true, el: document.getElementById('window')})
+    }
   })
 }
 
@@ -252,6 +287,7 @@ function setTypeCurPack(input) {
 module.exports.newFile = addCurPack
 module.exports.openFile = openFile
 module.exports.saveFile = saveFile
+module.exports.saveAsFile = saveAsFile
 module.exports.loadFile = loadFile
 module.exports.closeFile = deleteCurPack
 module.exports.copyFile = copyCurPack
