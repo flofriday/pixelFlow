@@ -6,4 +6,9 @@ todo.txt
 
 # The full css file for the photon framework (need only the minimal one)
 photon.css
+
+# The debug logs
 App/npm-debug.log
+
+# The packaged binaries
+App/build
