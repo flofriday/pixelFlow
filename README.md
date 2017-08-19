@@ -25,9 +25,8 @@
 - [License](#license)
 
 ## Quick Start
-This platform is currently in an early alpha version so at the moment there isn't any
-way to start right away. So if your, not a developer with way too much enthusiasm
-you shouldn't touch this repo yet.
+This platform is currently in an beta version so at the moment there
+isn't anyway to start right away.
 
 ### For Developers
 1. Download this repository.
@@ -36,25 +35,26 @@ you shouldn't touch this repo yet.
 4. Start the Software with `npm start`.
 
 ## Status
-This platform is currently in an early alpha version.
-At the Moment it isn't that useful, even though it's working, it performs very poorly.
-
-## Software
-!["Picture of Software"](Images/software.png)
-Documentation for the software will come soon.
-
-## Hardware
-Documentation for the hardware will come soon.
+This project is still in progress, so some features are missing. However, you
+can already use it.
 
 ## Communication
 Documentation for the communication will come soon.
 
+## Software
+!["Picture of Software"](Images/software.png)
+The Software is build with Electron, therefore it runs on macOS, Windows and
+Linux. Currently it can only communicate with the Ardunio over USB.
+
+## Hardware
+Documentation for the hardware will come soon.
+
 ## Contribute
-Style-Guides for contributing Code will come soon.
 Feel free to write issues.
 
 ## License
-The whole Platform is licensed under the [MIT License](LICENSE).
+The whole platform is licensed under the [MIT License](LICENSE).
+
 This License is also used for the Firmware and Software with only one exception.
 The file `App/js/html5kellycolorpicker.min.js` is licensed under GPLv3 and was
 written by ["NC22"](https://github.com/NC22/HTML5-Color-Picker).
