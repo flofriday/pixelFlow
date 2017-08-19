@@ -9,8 +9,8 @@ const player = require('../js/player')
 const hardware = require('../js/hardware')
 const windowMaker = require('../js/windowmaker')
 
-//const platform = process.platform
-const platform = 'win32' // darwin, freebsd, linux, win32
+const platform = process.platform
+//const platform = 'win32' // darwin, freebsd, linux, win32
 
 var template = []
 const name = 'pixelFlow'
