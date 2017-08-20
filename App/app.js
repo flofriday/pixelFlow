@@ -53,7 +53,6 @@ function createWindow () {
 
   // disable the default menu bar
   mainWindow.setMenu(null)
-   //require('./js/app_menu')
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/html/index.html`)
