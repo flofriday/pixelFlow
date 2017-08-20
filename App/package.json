@@ -1,16 +1,25 @@
 {
   "name": "pixelflow",
+  "productName": "pixelFlow",
   "version": "0.8.0",
   "description": "Your favorite editor for your 16x16 matrix.",
   "main": "app.js",
   "scripts": {
     "start": "electron app.js",
     "statistic": "node statistic.js",
-    "install": "electron-rebuild"
+    "install": "electron-rebuild",
+    "build:all": "node build.js --all --build",
+    "build:darwin": "node build.js --darwin --build",
+    "build:win32": "node build.js --win32 --build",
+    "build:linux": "node build.js --linux --build",
+    "package:all": "node build.js --all --package",
+    "package:darwin": "node build.js --darwin --package",
+    "package:win32": "node build.js --win32 --package",
+    "package:linux": "node build.js --linux --package"
   },
   "repository": {
     "type": "git",
-    "url": "private"
+    "url": "https://github.com/flofriday/pixelFlow"
   },
   "author": "flofriday",
   "license": "MIT",
@@ -20,6 +29,7 @@
     "serialport": "^5.0.0-beta8"
   },
   "devDependencies": {
+    "electron-packager": "^8.7.2",
     "electron-rebuild": "^1.5.11"
   }
 }

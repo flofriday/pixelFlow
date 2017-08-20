@@ -4,6 +4,7 @@ var path = require('path')
 var fileList = []
 var folderNumber = 0
 const blockedFolder = [
+  'build',
   'node_modules',
   'npm-debug.log',
   '.git',
