@@ -24,7 +24,13 @@ function buildManager() {
       OriginalFilename: 'pixelFlow.exe',
       ProductName: 'pixelFlow',
       InternalName: 'pixelFlow'
-    }
+    },
+    ignore: [
+      'photon.css',
+      'statistic.js',
+      'build.js',
+      'todo.txt'
+    ]
   }
 
   if(process.argv[2] == '--all') {
@@ -52,7 +58,7 @@ function buildManager() {
     }
 
     console.log('DONE: Result in ' + appPaths)
-   })
+  })
 }
 
 function packageManager() {
