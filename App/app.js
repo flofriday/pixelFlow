@@ -5,7 +5,7 @@ const electron = require('electron')
 const app = electron.app
 const os = require('os')
 const BrowserWindow = electron.BrowserWindow
-const {Menu} = require('electron')
+const windowStateKeeper = require('electron-window-state')
 
 /*
 * Keep a global reference of the window object, if you don't, the window will
@@ -40,10 +40,18 @@ function getIconPath() {
 * Create the main window
 */
 function createWindow () {
+  // Load the previous state with fallback to defaults
+  var mainWindowState = windowStateKeeper({
+    defaultWidth: 1200,
+    defaultHeight: 800
+  });
+
   // Create the browser window.
   mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 800,
+    x: mainWindowState.x,
+    y: mainWindowState.y,
+    width: mainWindowState.width,
+    height: mainWindowState.height,
     minWidth: 950,
     minHeight: 650,
     icon: getIconPath(),
@@ -53,6 +61,11 @@ function createWindow () {
 
   // disable the default menu bar
   mainWindow.setMenu(null)
+
+  // maximize if it was the last time
+  if (mainWindowState.isMaximized) {
+        mainWindow.maximize()
+    }
 
   // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/html/index.html`)
@@ -67,6 +80,9 @@ function createWindow () {
     mainWindow = null
     app.quit()
   })
+
+  // Let the windowsStateManager handle the window
+  mainWindowState.manage(mainWindow)
 }
 
 /*
