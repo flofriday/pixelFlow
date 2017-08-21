@@ -107,6 +107,23 @@ function updateBrightness(brightness) {
   }
 }
 
+function startup() {
+  // Try to connect wich was last connected
+  if (settings.get('connectionType') == 'usb') {
+    usb.tryConnect(settings.get('usbConnected'), (success) => {
+      if (success == true) {
+        connection = 'usb'
+      }
+      else {
+        settings.set('connectionType', '')
+        settings.set('usbConnected', '')
+      }
+    })
+  }
+}
+startup()
+
+// Connect to the usb device selected in the connection window
 ipc.on('connect-usb', (event, input) => {
   connection = 'usb'
   usb.connect(input)

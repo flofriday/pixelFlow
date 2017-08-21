@@ -1,6 +1,7 @@
 'use strict';
 const SerialPort = require('serialport');
 const biu = require('biu.js')
+const settings = require('electron-settings')
 
 
 var port = null
@@ -21,6 +22,8 @@ function onData(data) {
 function onClose() {
   console.log('port closed');
   biu('Disconnected from port \"' + lastPortName + '\"', {type: 'danger',pop: true, el: document.getElementById('window')})
+  settings.set('connectionType', '')
+  settings.set('usbConnected', '')
 }
 
 function onError(error) {
@@ -44,11 +47,29 @@ function connect(path) {
 
   port = new SerialPort(path, options); // open the serial port:
   isConnected = true
+  settings.set('connectionType', 'usb')
+  settings.set('usbConnected', path)
 
   port.on('open', onOpen);
   //port.on('data', onData);
   port.on('close', onClose);
   port.on('error', onError);
+}
+
+function tryConnect(path, callback) {
+  SerialPort.list(function (err, ports) {
+    var found = false
+
+    // check if the last device is still connected
+    ports.forEach(function(port) {
+      if (port.comName == path){
+        found = true
+        connect(path)
+      }
+    })
+
+    callback(found)
+  })
 }
 
 function disconnect() {
@@ -73,6 +94,7 @@ function println(message) {
 }
 
 module.exports.connect = connect
+module.exports.tryConnect = tryConnect
 module.exports.disconnect = disconnect
 module.exports.print = print
 module.exports.println = println
