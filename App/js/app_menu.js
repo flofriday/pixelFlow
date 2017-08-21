@@ -213,16 +213,42 @@ var viewMenu = {
       type: 'separator'
     },
     {
-      lable: 'Reset Zoom',
-      role: 'resetzoom'
+      label: 'Reset Zoom',
+      accelerator: 'CmdOrCtrl+0',
+      click() {
+        // Reset Zoom
+        webFrame.setZoomFactor(1);
+        settings.set('zoom.factor', webFrame.getZoomFactor())
+        console.log("Zoom: " + (webFrame.getZoomFactor() * 100) + "%")
+      }
     },
     {
-      role: 'zoomin',
-      accelerator: 'CmdOrCtrl+='
+      label: 'Zoom in',
+
+      /*
+      * I know that "Ctrl =" seams to be an akward shortcut. But thats a bug in
+      * Electron! In fact this is "Ctrl Plus". It even shows that combination in
+      * the menu.
+      */
+      accelerator: 'CmdOrCtrl+=',
+      click() {
+        // Zoom in
+        webFrame.setZoomFactor(webFrame.getZoomFactor() + 0.1);
+        if (webFrame.getZoomFactor() > 5) {webFrame.setZoomFactor(5)}
+        settings.set('zoom.factor', webFrame.getZoomFactor())
+        console.log("Zoom: " + (webFrame.getZoomFactor() * 100) + "%")
+      }
     },
     {
-      role: 'zoomout',
-      accelerator: 'CmdOrCtrl+-'
+      label: 'Zoom out',
+      accelerator: 'CmdOrCtrl+-',
+      click() {
+        // Zoom out
+        webFrame.setZoomFactor(webFrame.getZoomFactor() - 0.1);
+        if (webFrame.getZoomFactor() < 0.20) {webFrame.setZoomFactor(0.20)}
+        settings.set('zoom.factor', webFrame.getZoomFactor())
+        console.log("Zoom: " + (webFrame.getZoomFactor() * 100) + "%")
+      }
     },
     {
       type: 'separator'

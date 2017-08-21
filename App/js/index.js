@@ -4,6 +4,7 @@ const remote = electron.remote
 const webFrame = electron.webFrame
 const ipc = electron.ipcRenderer
 const os = require('os')
+const settings = require('electron-settings')
 const windowConfig = require('../js/windowconfig')
 const matrix = require('../js/mainmatrix')
 matrix.start()  //start it up
@@ -13,7 +14,8 @@ const colorPicker = require('../js/colorpicker')
 const player = require('../js/player')
 const hardware = require('../js/hardware')
 const frameText = require('../js/frametext')
-const app_menu = require('../js/app_menu');
+const app_menu = require('../js/app_menu')
+const settingsConfig = require('../js/settingsconfig')
 const windowMaker = require('../js/windowmaker')
 
 
@@ -21,7 +23,6 @@ const windowMaker = require('../js/windowmaker')
 colorPicker.start()
 
 // Handle the DOM
-webFrame.setZoomFactor(1.3)
 var btnDeveloper = document.getElementById("btn-developer")
 var btnAbout = document.getElementById('btn-about')
 var btnBluetooth =document.getElementById('btn-bluetooth')
@@ -40,12 +41,14 @@ function globalKeyHandler(e) {
     // Zoom in
     webFrame.setZoomFactor(webFrame.getZoomFactor() + 0.1);
     if (webFrame.getZoomFactor() > 5) {webFrame.setZoomFactor(5)}
+    settings.set('zoom.factor', webFrame.getZoomFactor())
     console.log("Zoom: " + (webFrame.getZoomFactor() * 100) + "%")
   }
   else if (e.key === "-" && (e.ctrlKey || e.metaKey)) {
     // Zoom out
     webFrame.setZoomFactor(webFrame.getZoomFactor() - 0.1);
     if (webFrame.getZoomFactor() < 0.20) {webFrame.setZoomFactor(0.20)}
+    settings.set('zoom.factor', webFrame.getZoomFactor())
     console.log("Zoom: " + (webFrame.getZoomFactor() * 100) + "%")
   }
   else if(e.keyCode === 116) {

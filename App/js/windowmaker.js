@@ -9,6 +9,7 @@ const electron = require('electron')
 const remote = electron.remote
 const BrowserWindow = electron.remote.BrowserWindow
 const path = require('path')
+const settings = require('electron-settings')
 
 /*
 * Create the windows
@@ -27,8 +28,8 @@ function openAbout() {
 
   const modalPath = path.join('file://', __dirname, '../html/about.html')
   let win = new BrowserWindow({
-    width: 600,
-    height: 450,
+    width: 600 * settings.get('zoom.factor'),
+    height: 450 * settings.get('zoom.factor'),
     frame: false,
     show: false,
     resizable: false,
@@ -72,8 +73,8 @@ function openConnection() {
 
   const modalPath = path.join('file://', __dirname, '../html/connection.html')
   let win = new BrowserWindow({
-    width: 600,
-    height: 400,
+    width: 400 * settings.get('zoom.factor'),
+    height: 300 * settings.get('zoom.factor'),
     resizable: false,
     minimizable: false,
     title: "Select Hardware",

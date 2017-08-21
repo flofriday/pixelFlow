@@ -26,6 +26,7 @@
   "dependencies": {
     "biu.js": "^1.2.0",
     "electron": "^1.7.6",
+    "electron-settings": "^3.1.1",
     "electron-window-state": "^4.1.1",
     "serialport": "^5.0.0-beta8"
   },

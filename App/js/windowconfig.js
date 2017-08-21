@@ -10,6 +10,13 @@
 const electron = require('electron')
 const remote = electron.remote
 const shell = electron.shell
+const webFrame = electron.webFrame
+const settings = require('electron-settings')
+
+/*
+* Zoom the window
+*/
+webFrame.setZoomFactor(settings.get('zoom.factor'))
 
 /*
 * Handle key shortcuts
