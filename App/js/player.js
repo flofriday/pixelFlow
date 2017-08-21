@@ -2,6 +2,7 @@
 * Load some Module
 */
 const frame = require('../js/frame')
+const settings = require('electron-settings')
 
 /*
 * DOM Elements
@@ -33,12 +34,21 @@ var isLoop = false
 function toggleLoop() {
   if (isLoop) {
     isLoop = false
+    settings.set('player.isLoop', false)
     btnLoop.classList.remove('active')
   }
   else {
     isLoop = true
+    settings.set('player.isLoop', true)
     btnLoop.classList.add('active')
   }
+}
+
+// check if it was enabled in the settings
+if (settings.get('player.isLoop') == true)
+{
+  isLoop = true
+  btnLoop.classList.add('active')
 }
 
 var playerTimer = null

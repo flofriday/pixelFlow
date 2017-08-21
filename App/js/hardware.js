@@ -1,3 +1,4 @@
+const settings = require('electron-settings')
 const usb = require('../js/usb')
 //const bluetooth = require('../js/bluetooth')
 const matrix = require('../js/mainmatrix')
@@ -14,13 +15,22 @@ btnLiveUpdate.addEventListener("click", toggleLiveUpdate, false)
 var liveUpdate = false
 function toggleLiveUpdate() {
   if (liveUpdate) {
-    liveUpdate = false;
+    liveUpdate = false
+    settings.set('player.isLiveUpdate', false)
     btnLiveUpdate.classList.remove('active')
   } else {
-    liveUpdate = true;
+    liveUpdate = true
+    settings.set('player.isLiveUpdate', true)
     btnLiveUpdate.classList.add('active')
     updateFrame(matrix.getPixelList())
   }
+}
+
+// check if it was enabled in the settings from the last seasson
+if (settings.get('player.isLiveUpdate') == true)
+{
+  liveUpdate = true
+  btnLiveUpdate.classList.add('active')
 }
 
 /*

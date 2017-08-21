@@ -30,6 +30,7 @@ if (settings.has('player') == false) {
 // Hardware
 if (settings.has('hardware') == false) {
   settings.set('hardware', {
+    connectionType: '',
     usbConnected: '',
     bluetoothConnected: ''
   })
