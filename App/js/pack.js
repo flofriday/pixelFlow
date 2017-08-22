@@ -66,15 +66,18 @@ function removePackUI(index) {
 */
 var packList = []
 var packSelected = 0
-var packDefaultType = "Picture"
 var packDefaultName = "New File"
 var packDefaultPath = null
 var packDefaultBrightness = 40
+var packDefaultSelected = 0
+var packDefaultType = "Picture"
 var packDefaultFrameList = frame.getDefaultFrameList()
-function Pack(name, path, brightness, type, frameList) {
+function Pack(name, path, brightness, selectedFrame, type, frameList) {
   this.name = name
   this.path = path
   this.brightness = brightness
+  this.selectedFrame = selectedFrame
+  this.type = type
   this.frameList = frameList
 }
 
@@ -88,6 +91,7 @@ function saveAsFile() {
   delete content.name
   delete content.path
   delete content.type
+  delete content.selectedFrame
   content = JSON.stringify(content)
 
   // create the options for the dialog
@@ -138,6 +142,7 @@ function saveFile() {
   delete content.name
   delete content.path
   delete content.type
+  delete content.selectedFrame
   content = JSON.stringify(content)
 
   // check if the path exists
@@ -220,7 +225,7 @@ function loadFile(fileName) {
       }
 
       var newPackId = packList.length === 0 ? 0 : packSelected + 1
-      var newPack = new Pack(name, fileName, obj.brightness, type, obj.frameList)
+      var newPack = new Pack(name, fileName, obj.brightness, packDefaultSelected, type, obj.frameList)
       packList.splice(newPackId, 0, newPack)
       spawnPackUI(newPackId, newPack.name, type)
       changeSelectedPack(newPackId)
@@ -235,6 +240,7 @@ function updatePack() {
   packList[packSelected].name = packUIContainer.children[packSelected].children[1].children[0].innerText
   packList[packSelected].brightness = inputBrightness.valueAsNumber
   packList[packSelected].frameList = frame.getFrameList()
+  packList[packSelected].selectedFrame = frame.getframeSelected()
 
   // Delete Path when renamed
   if (packList[packSelected].path != null) {
@@ -248,16 +254,18 @@ function showPack() {
   packUIContainer.children[packSelected].children[1].children[0].innerText = packList[packSelected].name
   inputBrightness.value = packList[packSelected].brightness
   frame.loadFrameList(packList[packSelected].frameList)
+  console.log(packList[packSelected].selectedFrame);
+  frame.changeSelectedFrame(packList[packSelected].selectedFrame)
 }
 
 function spawnPack() {
   spawnPackUI(packUIContainer.children.length, packDefaultName, packDefaultType)
-  packList[packList.length] = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, packDefaultType, frame.getDefaultFrameList())
+  packList[packList.length] = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, packDefaultSelected, packDefaultType, frame.getDefaultFrameList())
   showPack()
 }
 
 function addCurPack() {
-  var newPack = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, packDefaultType, frame.getDefaultFrameList())
+  var newPack = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, packDefaultSelected, packDefaultType, frame.getDefaultFrameList())
   packList.splice(packSelected + 1, 0, newPack)
   spawnPackUI(packSelected + 1, packDefaultName, packDefaultType)
   changeSelectedPack(packSelected + 1)
