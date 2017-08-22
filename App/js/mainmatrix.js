@@ -126,6 +126,7 @@ function Create2DArray(rows) {
 */
 var pixelNumber = 16
 var pixelBorder = 2
+var pixelGrid = true
 var pixelList = Create2DArray(pixelNumber)
 spawnPixel()
 function Pixel (color) {
@@ -182,6 +183,10 @@ function getPixelList() {
   return pixelList
 }
 
+function toggleGrid() {
+  pixelGrid = !pixelGrid
+}
+
 function drawPixel() {
   for (var c = 0; c < pixelNumber; c++) {
     for (var r = 0; r < pixelNumber; r++) {
@@ -189,20 +194,24 @@ function drawPixel() {
       ctx.rect(c * (canvas.width / pixelNumber), r * (canvas.height / pixelNumber), canvas.width / pixelNumber, canvas.height / pixelNumber)
       ctx.fillStyle = pixelList[c][r].color
       ctx.fill()
-      ctx.lineWidth="2"
-      ctx.strokeStyle="#999999"
-      ctx.stroke()
+      if (pixelGrid) {
+        ctx.lineWidth="2"
+        ctx.strokeStyle="#999999"
+        ctx.stroke()
+      }
       ctx.closePath()
     }
   }
 
   // make the outline black
-  ctx.beginPath()
-  ctx.rect(0, 0, canvas.width, canvas.height)
-  ctx.lineWidth="2"
-  ctx.strokeStyle="#000000"
-  ctx.stroke()
-  ctx.closePath()
+  if (pixelGrid) {
+    ctx.beginPath()
+    ctx.rect(0, 0, canvas.width, canvas.height)
+    ctx.lineWidth="2"
+    ctx.strokeStyle="#000000"
+    ctx.stroke()
+    ctx.closePath()
+  }
 }
 
 
@@ -231,3 +240,4 @@ module.exports.fillPixelsSelectedColor = fillPixelsSelectedColor
 module.exports.getContent = getContent
 module.exports.loadContent = loadContent
 module.exports.getPixelList = getPixelList
+module.exports.toggleGrid = toggleGrid

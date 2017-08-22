@@ -207,6 +207,13 @@ var viewMenu = {
   label: 'View',
   submenu: [
     {
+      label: 'Toggle Grid',
+      click() {matrix.toggleGrid()}
+    },
+    {
+      type: 'separator'
+    },
+    {
       role: 'togglefullscreen'
     },
     {
