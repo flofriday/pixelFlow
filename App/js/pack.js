@@ -224,11 +224,52 @@ function loadFile(fileName) {
         type = "Picture"
       }
 
-      var newPackId = packList.length === 0 ? 0 : packSelected + 1
+      var newPackId = packSelected + 1
       var newPack = new Pack(name, fileName, obj.brightness, packDefaultSelected, type, obj.frameList)
       packList.splice(newPackId, 0, newPack)
       spawnPackUI(newPackId, newPack.name, type)
       changeSelectedPack(newPackId)
+
+      // Update the settings
+      settings.set('fileList.open', getAllFilesPaths())
+    }
+  })
+}
+
+function loadFirstFile (fileName) {
+  // check for right file-type
+  if (path.extname(fileName).toLowerCase() !== '.pixelflow') {
+    // wrong fily-type
+    biu('The file "' + path.basename(fileName) + '" is not a .pixelflow file!', {type: 'danger', pop: true, el: document.getElementById('window')})
+    return
+  }
+
+
+  fs.readFile(fileName, 'utf-8', function (err, data) {
+    // error checking
+    if (err) {
+      biu('Error at opening the file "' + fileName + '": ' + err, {type: 'danger', pop: true, el: document.getElementById('window')})
+    }
+    else {
+      var obj = JSON.parse(data)
+      var name = path.basename(fileName, '.pixelflow')
+      var type
+      if (obj.frameList.length > 2) {
+        type = "Animation"
+      }
+      else {
+        type = "Picture"
+      }
+
+      console.log('first file')
+      var newPackId = 0
+      var newPack = new Pack(name, fileName, obj.brightness, packDefaultSelected, type, obj.frameList)
+      packList.push(newPack)
+      console.log(newPack)
+      console.log(packList)
+      spawnPackUI(newPackId, newPack.name, type)
+      packSelected = 0
+      showPack()
 
       // Update the settings
       settings.set('fileList.open', getAllFilesPaths())
@@ -254,7 +295,6 @@ function showPack() {
   packUIContainer.children[packSelected].children[1].children[0].innerText = packList[packSelected].name
   inputBrightness.value = packList[packSelected].brightness
   frame.loadFrameList(packList[packSelected].frameList)
-  console.log(packList[packSelected].selectedFrame);
   frame.changeSelectedFrame(packList[packSelected].selectedFrame)
 }
 
@@ -358,7 +398,7 @@ function startup() {
 
   for (var i = 0; i < fileList.length; i++) {
     if (fs.existsSync(fileList[i]) === true) {
-      loadFile(fileList[i])
+      i == 0 ? loadFirstFile(fileList[i]) : loadFile(fileList[i])
       found = true
     }
   }
