@@ -85,8 +85,9 @@ function saveAsFile() {
 
   // Create the string to save
   var content = JSON.parse(JSON.stringify(packList[index]))
-  delete content.path;
-  delete content.type;
+  delete content.name
+  delete content.path
+  delete content.type
   content = JSON.stringify(content)
 
   // create the options for the dialog
@@ -100,7 +101,8 @@ function saveAsFile() {
 
   // check if the path exists
   if (fs.existsSync(options.defaultPath) === false) {
-    delete options.defaultPath
+    //delete options.defaultPath
+    options.defaultPath = packList[index].name + '.pixelflow'
   }
 
   // show the save dialog
@@ -115,6 +117,7 @@ function saveAsFile() {
       }
       else
       {
+        packList[index].name = path.basename(fileName, '.pixelflow')
         packList[index].path = fileName
         biu('Saved successfully.', {type: 'success', pop: true, el: document.getElementById('window')})
 
@@ -132,8 +135,9 @@ function saveFile() {
 
   // Create the string to save
   var content = JSON.parse(JSON.stringify(packList[index]))
-  delete content.path;
-  delete content.type;
+  delete content.name
+  delete content.path
+  delete content.type
   content = JSON.stringify(content)
 
   // check if the path exists
@@ -154,6 +158,7 @@ function saveFile() {
     }
     else
     {
+      packList[index].name = path.basename(fileName, '.pixelflow')
       packList[index].path = fileName
       biu('Saved successfully.', {type: 'success', pop: true, el: document.getElementById('window')})
 
@@ -205,6 +210,7 @@ function loadFile(fileName) {
     }
     else {
       var obj = JSON.parse(data)
+      var name = path.basename(fileName, '.pixelflow')
       var type
       if (obj.frameList.length > 2) {
         type = "Animation"
@@ -214,7 +220,7 @@ function loadFile(fileName) {
       }
 
       var newPackId = packList.length === 0 ? 0 : packSelected + 1
-      var newPack = new Pack(obj.name, fileName, obj.brightness, type, obj.frameList)
+      var newPack = new Pack(name, fileName, obj.brightness, type, obj.frameList)
       packList.splice(newPackId, 0, newPack)
       spawnPackUI(newPackId, newPack.name, type)
       changeSelectedPack(newPackId)
@@ -229,6 +235,13 @@ function updatePack() {
   packList[packSelected].name = packUIContainer.children[packSelected].children[1].children[0].innerText
   packList[packSelected].brightness = inputBrightness.valueAsNumber
   packList[packSelected].frameList = frame.getFrameList()
+
+  // Delete Path when renamed
+  if (packList[packSelected].path != null) {
+    if (packList[packSelected].name !== path.basename(packList[packSelected].path, '.pixelflow')) {
+      packList[packSelected].path = null
+    }
+  }
 }
 
 function showPack() {
@@ -253,6 +266,7 @@ function addCurPack() {
 function copyCurPack() {
   updatePack()
   var newPack = JSON.parse(JSON.stringify(packList[packSelected]));
+  newPack.path = null // The new copy can't have the same path
   packList.splice(packSelected + 1, 0, newPack)
   spawnPackUI(packSelected + 1, packDefaultName, packDefaultType)
   changeSelectedPack(packSelected + 1)
