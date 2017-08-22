@@ -14,6 +14,7 @@ const dialog = app.dialog
 const fs = require('fs')
 const path = require('path')
 const shell = electron.shell
+const settings = require('electron-settings')
 
 /*
 * All DOM related stuff
@@ -116,6 +117,9 @@ function saveAsFile() {
       {
         packList[index].path = fileName
         biu('Saved successfully.', {type: 'success', pop: true, el: document.getElementById('window')})
+
+        // Update the settings
+        settings.set('fileList.open', getAllFilesPaths())
       }
     })
   })
@@ -152,6 +156,9 @@ function saveFile() {
     {
       packList[index].path = fileName
       biu('Saved successfully.', {type: 'success', pop: true, el: document.getElementById('window')})
+
+      // Update the settings
+      settings.set('fileList.open', getAllFilesPaths())
     }
   })
 }
@@ -206,10 +213,14 @@ function loadFile(fileName) {
         type = "Picture"
       }
 
+      var newPackId = packList.length === 0 ? 0 : packSelected + 1
       var newPack = new Pack(obj.name, fileName, obj.brightness, type, obj.frameList)
-      packList.splice(packSelected + 1, 0, newPack)
-      spawnPackUI(packSelected + 1, newPack.name, type)
-      changeSelectedPack(packSelected + 1)
+      packList.splice(newPackId, 0, newPack)
+      spawnPackUI(newPackId, newPack.name, type)
+      changeSelectedPack(newPackId)
+
+      // Update the settings
+      settings.set('fileList.open', getAllFilesPaths())
     }
   })
 }
@@ -261,6 +272,9 @@ function deleteCurPack() {
   showPack()
   removePackUI(packSelected)
   packUIContainer.children[packSelected].classList.add('active')
+
+  // Update the settings
+  settings.set('fileList.open', getAllFilesPaths())
 }
 
 // Open the filemanager in the directory where the current file is
@@ -290,14 +304,50 @@ function changeSelectedPack(number) {
   showPack()
 }
 
-/*
-* Functions other modules need to interact with this module
-*/
+// Functions other modules need to interact with this module
 function setTypeCurPack(input) {
   packList[packSelected].type = input
 
   // Change the text in the HTML
   packUIContainer.children[packSelected].children[1].children[1].textContent = input
+}
+
+function getAllFilesPaths() {
+  var out = []
+
+  packList.forEach((e) => {
+    if (e.path != 'null') {
+      out.push(e.path)
+    }
+  })
+
+  // Reomove duplicates
+  out = out.filter(function(elem, index, self) {
+    return index == self.indexOf(elem);
+  })
+
+  return out
+}
+
+// Tries to open the files saved in the settings
+function startup() {
+  var found = false
+  var fileList = settings.get('fileList.open')
+
+  for (var i = 0; i < fileList.length; i++) {
+    if (fs.existsSync(fileList[i]) === true) {
+      loadFile(fileList[i])
+      found = true
+    }
+  }
+
+  // Update the settings
+  settings.set('fileList.open', getAllFilesPaths())
+
+  if (found === false) {
+    // spawn one pack
+    spawnPack()
+  }
 }
 
 module.exports.newFile = addCurPack
@@ -311,4 +361,4 @@ module.exports.showInManager = showInManager
 module.exports.setTypeCurPack = setTypeCurPack
 
 
-spawnPack()
+startup()
