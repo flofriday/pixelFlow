@@ -15,9 +15,8 @@ const platform = process.platform
 var template = []
 const name = 'pixelFlow'
 
-/*
-* The App Menu (macOS)
-*/
+
+//The App Menu (macOS)
 if (platform == 'darwin') {
   var appMenu = {
     label: name,
@@ -57,9 +56,7 @@ if (platform == 'darwin') {
   template.push(appMenu)
 }
 
-/*
-* The File Menu
-*/
+//The File Menu
 var fileMenu = {
   label: 'File',
   submenu: [
@@ -127,7 +124,6 @@ if (platform != 'darwin') {
 )}
 template.push(fileMenu)
 
-
 // The Frame Menu
 var frameMenu = {
   label: 'Frame',
@@ -164,11 +160,17 @@ var frameMenu = {
     {
       label: 'Add Text',
       click(){ frameText.enterText() }
+    },
+    {
+      type: 'separator'
+    },
+    {
+      label: 'Set Frames Time',
+      click(){ frame.setFrameListTime() }
     }
   ]
 }
 template.push(frameMenu)
-
 
 // The Device Menu
 var deviceMenu = {

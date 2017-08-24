@@ -90,11 +90,13 @@ function showFrame() {
   matrix.loadContent(frameList[frameSelected].content)
 }
 
+/* This will return the whole FrameList */
 function getFrameList() {
   updateFrame()
   return frameList
 }
 
+/* This loads the frameList given as the input */
 function loadFrameList(input) {
   lengthDiff = input.length - frameList.length
   changeSelectedFrame(0)
@@ -116,11 +118,13 @@ function loadFrameList(input) {
   }
 }
 
+/* This spawns a new Frame with the default values at the end */
 function spawnFrame() {
   spawnFrameUI();
   frameList[frameList.length] = new Frame(frameDefaultTime, frameDefaultContent)
 }
 
+/* Like spawnFrame but not at the end, instead at next place */
 function addCurFrame() {
   newframe = new Frame(frameDefaultTime, frameDefaultContent)
   frameList.splice(frameSelected + 1, 0, newframe)
@@ -129,6 +133,7 @@ function addCurFrame() {
   if(frameList.length === 2) {pack.setTypeCurPack('Animation')}
 }
 
+/* Copy the current Frame */
 function copyCurFrame() {
   updateFrame();
   spawnFrameUI();
@@ -138,6 +143,7 @@ function copyCurFrame() {
   if(frameList.length === 2) {pack.setTypeCurPack('Animation')}
 }
 
+/* Delete the current Frame */
 function deleteCurFrame() {
   // There musst be allways at least one frame
   if (frameList.length <= 1) {
@@ -155,6 +161,7 @@ function deleteCurFrame() {
   if(frameList.length === 1) {pack.setTypeCurPack('Picture')}
 }
 
+/* Change to the frame given as the input */
 function changeSelectedFrame(number) {
   // error checking
   if (number >= frameList.length) {number = frameList.length - 1}
@@ -172,16 +179,74 @@ function changeSelectedFrame(number) {
   showFrame()
 }
 
+/* Get the index of the frame wich is selected */
 function getframeSelected() {
   return frameSelected
 }
 
+/* Return the length of the frameList */
 function getFrameListLength() {
   return frameList.length
 }
 
+/* Return the frame object of the current frame */
 function getFrame() {
   return JSON.parse(JSON.stringify(frameList[frameSelected]))
+}
+
+/* Change the time for every frame */
+function setFrameListTime() {
+  /*
+  * Use biu for the input cause i am too lazy to develop a solution by my own.
+  * I know that is ungly, and shouldn't be done, but I need to finish this
+  * project at sunday.
+  * Pls don't judge me.
+  */
+  var userConfirmedInput = false
+
+  const template = `Enter time for every frame: <input id="framelist-time-prompt" style="width: 100px" class="form-control" type="number"/>
+  <button id="framelist-time-ok" style="width: 40px; height: 30px;" class="btn btn-primary">OK!</button>`
+
+  const tip = biu(template, {
+    type: 'info',
+    autoHide: false,
+    el: document.getElementById('window'),
+    onHidden() {
+      // check if the input is useful and the user didn't pressed the X button
+      if (userConfirmedInput == false || document.querySelector('#framelist-time-prompt').value == '') {
+        return
+      }
+
+      const number = document.querySelector('#framelist-time-prompt').valueAsNumber
+      updateFrame()
+
+      for (var i = 0; i < frameList.length; i++) {
+        frameList[i].time = number
+      }
+
+      showFrame()
+    }
+  })
+
+  // hide the tip when the ok butten is clicked
+  document.getElementById('framelist-time-ok').addEventListener('click', () => {
+    userConfirmedInput = true
+    tip.hide()
+  })
+
+  // hide the tip if enter or escape is pressed
+  document.getElementById('framelist-time-prompt').addEventListener('keydown', (e) => {
+    if (e.keyCode === 13) {
+      // it is the enter key
+      userConfirmedInput = true
+      tip.hide()
+    }
+    else if (e.keyCode === 27) {
+      // it is the esc key
+      userConfirmedInput = false
+      tip.hide()
+    }
+  })
 }
 
 /*
@@ -199,5 +264,6 @@ module.exports.getFrame = getFrame
 module.exports.newFrame = addCurFrame
 module.exports.copyFrame = copyCurFrame
 module.exports.deleteFrame = deleteCurFrame
+module.exports.setFrameListTime = setFrameListTime
 
 spawnFrame()

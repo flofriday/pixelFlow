@@ -261,12 +261,9 @@ function loadFirstFile (fileName) {
         type = "Picture"
       }
 
-      console.log('first file')
       var newPackId = 0
       var newPack = new Pack(name, fileName, obj.brightness, packDefaultSelected, type, obj.frameList)
       packList.push(newPack)
-      console.log(newPack)
-      console.log(packList)
       spawnPackUI(newPackId, newPack.name, type)
       packSelected = 0
       showPack()
