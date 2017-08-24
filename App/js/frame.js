@@ -212,6 +212,8 @@ function setFrameListTime() {
     autoHide: false,
     el: document.getElementById('window'),
     onHidden() {
+      document.getElementById('window-content').classList.remove('blur')
+
       // check if the input is useful and the user didn't pressed the X button
       if (userConfirmedInput == false || document.querySelector('#framelist-time-prompt').value == '') {
         return
@@ -228,9 +230,18 @@ function setFrameListTime() {
     }
   })
 
+  // Add filter for background
+  document.getElementById('window-content').classList.add('blur')
+
   // hide the tip when the ok butten is clicked
   document.getElementById('framelist-time-ok').addEventListener('click', () => {
     userConfirmedInput = true
+    tip.hide()
+  })
+
+  // hide the tip when mousedown outside of the tip
+  document.getElementById('window-content').addEventListener('click', () => {
+    userConfirmedInput = false
     tip.hide()
   })
 
