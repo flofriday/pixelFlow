@@ -1,7 +1,7 @@
 {
   "name": "pixelflow",
   "productName": "pixelFlow",
-  "version": "0.8.2",
+  "version": "0.8.3",
   "description": "Your favorite editor for your 16x16 matrix.",
   "main": "app.js",
   "scripts": {
