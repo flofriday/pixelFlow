@@ -52,7 +52,7 @@ function globalKeyHandler(e) {
     console.log("Zoom: " + (webFrame.getZoomFactor() * 100) + "%")
   }
   else if(e.keyCode === 116) {
-    // Reload ouput (F5)
+    // Reload output (F5)
     hardware.updateFrame(matrix.getPixelList())
   }
 }

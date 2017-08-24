@@ -352,6 +352,9 @@ function showInManager() {
 }
 
 function changeSelectedPack(number) {
+  // check if number is useable (this check is needed even though I have no idea why)
+  if (number > packList.length || number < 0) {return}
+
   if (packUIContainer.children[packSelected].classList.contains('active'))
   {
     packUIContainer.children[packSelected].classList.remove('active')
