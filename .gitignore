@@ -12,3 +12,10 @@ App/npm-debug.log
 
 # The packaged binaries
 App/build
+
+
+
+# Temporary, cause not done
+Docs
+App/ubuntu-package.sh
+App/ubuntu-download-package.sh
