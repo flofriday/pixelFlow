@@ -8,8 +8,8 @@
 
 
 # Remove old repo if exist
-rm -r pixelFlow
-rm -r build
+sudo rm -r pixelFlow
+sudo rm -r build
 
 # Download the git repository
 git clone git://github.com/flofriday/pixelFlow
