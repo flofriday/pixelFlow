@@ -30,12 +30,21 @@ function globalKeyHandler (e) {
   }
 }
 
-frameUIContainer.onclick = function (e) {
+frameUIContainer.onmousedown = function (e) {
   var el = e.target;
   while (el != document.body && el.tagName.toLowerCase() != "div") {
     el = el.parentNode;
   }
   changeSelectedFrame(parseInt([].indexOf.call(el.parentNode.children, el)));
+}
+
+function siblingIndex(el) {
+  var i = 0;
+  while( (el = el.previousSibling) != null ) {
+    i++;
+  }
+  // Fuck it, I don't understand why I have to subtract 1 but it works now.
+  return i - 1
 }
 
 function spawnFrameUI() {
@@ -50,6 +59,20 @@ function spawnFrameUI() {
 
 function removeFrameUI() {
   frameUIContainer.removeChild(frameUIContainer.lastChild)
+}
+
+/* Redraws the UI for all frames from scratch */
+function redrawFrameUI() {
+  frameUIContainer.innerHTML = ""
+
+  for (let i = 0; i < frameList.length; i++)
+  {
+    spawnFrameUI()
+  }
+
+  // This code is just necessarry because spawnFrameUI makes the first frame active
+  frameUIContainer.children[0].classList.remove('active')
+  frameUIContainer.children[frameSelected].classList.add('active')
 }
 
 /* Make the container scroll vertical */
@@ -179,6 +202,22 @@ function changeSelectedFrame(number) {
   showFrame()
 }
 
+/* The backend for drag and drop from the frames */
+function moveFrame(el, target, source, sibling) {
+  updateFrame()
+  var oldSelected = frameSelected
+  var newSelected = siblingIndex(el)
+
+  // splice returns an array so thats where the moveFrame[0] comes from
+  var moveFrame = frameList.splice(oldSelected, 1)
+  frameList.splice(newSelected, 0, moveFrame[0])
+
+  frameSelected = newSelected
+
+  redrawFrameUI()
+  showFrame()
+}
+
 /* Get the index of the frame wich is selected */
 function getframeSelected() {
   return frameSelected
@@ -260,6 +299,15 @@ function setFrameListTime() {
   })
 }
 
+function startup() {
+  // spawn the first frame
+  spawnFrame()
+
+  // handle the drag 'n drop libary dragular
+  var drake = dragula([frameUIContainer], {direction: 'horizontal'})
+  drake.on('drop', moveFrame)
+}
+
 /*
 * Export of this module
 */
@@ -277,4 +325,5 @@ module.exports.copyFrame = copyCurFrame
 module.exports.deleteFrame = deleteCurFrame
 module.exports.setFrameListTime = setFrameListTime
 
-spawnFrame()
+
+startup()
