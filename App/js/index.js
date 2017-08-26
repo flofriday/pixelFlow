@@ -5,6 +5,7 @@ const webFrame = electron.webFrame
 const ipc = electron.ipcRenderer
 const os = require('os')
 const settings = require('electron-settings')
+const settingsConfig = require('../js/settingsconfig')
 const windowConfig = require('../js/windowconfig')
 const matrix = require('../js/mainmatrix')
 matrix.start()  //start it up
@@ -15,7 +16,6 @@ const player = require('../js/player')
 const hardware = require('../js/hardware')
 const frameText = require('../js/frametext')
 const app_menu = require('../js/app_menu')
-const settingsConfig = require('../js/settingsconfig')
 const windowMaker = require('../js/windowmaker')
 
 
