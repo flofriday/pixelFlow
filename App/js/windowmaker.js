@@ -15,6 +15,21 @@ const settings = require('electron-settings')
 * Create the windows
 */
 
+
+// Function to get the Path for a Icon
+function getIconPath() {
+  if (os.platform() === 'darwin') {
+    return path.join(__dirname, '../img/icon.icns')
+  }
+  else if (os.platform() === 'win32') {
+    return path.join(__dirname, '../img/icon.ico')
+  }
+  else {
+    // For all other platforms like: linux, freebsd, openbsd
+    return path.join(__dirname, '../img/icon.png')
+  }
+}
+
 // Create the About Window
 var aboutWinId = null
 function openAbout() {
@@ -35,6 +50,8 @@ function openAbout() {
     resizable: false,
     minimizable: false,
     titleBarStyle: 'hidden',
+    title: "About pixelFlow",
+    icon: getIconPath()
   })
   win.loadURL(modalPath)
   //win.webContents.openDevTools()  // Only for debugging
@@ -42,22 +59,6 @@ function openAbout() {
   win.on('close', function () { win = null; aboutWinId = null })
   aboutWinId = win.id
 }
-
-
-// Function to get the Path for a Icon
-function getIconPath() {
-  if (os.platform() === 'darwin') {
-    return path.join(__dirname, '../img/icon.icns')
-  }
-  else if (os.platform() === 'win32') {
-    return path.join(__dirname, '../img/icon.ico')
-  }
-  else {
-    // For all other platforms like: linux, freebsd, openbsd
-    return path.join(__dirname, '../img/icon.png')
-  }
-}
-
 
 // Create the Connection Window
 var connectWinId = null
@@ -79,7 +80,6 @@ function openConnection() {
     minimizable: false,
     title: "Select Hardware",
     icon: getIconPath(),
-    backgroundColor: '#ffffff',
     parent: BrowserWindow.getFocusedWindow(),
     show: false
   })
