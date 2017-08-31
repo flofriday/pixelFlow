@@ -27,6 +27,11 @@ const fileTypes = [
     ending: '.json',
     type: 'Code'
   },
+  {
+    name: 'Unix Shell Script',
+    ending: '.sh',
+    type: 'Code'
+  },
 
   /*
   * Markdown Languages
