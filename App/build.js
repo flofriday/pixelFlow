@@ -5,7 +5,7 @@
 
 // Require some modules
 var packager = require('electron-packager')
-
+var rebuild = require('electron-rebuild')
 
 function buildManager() {
   var options = {
@@ -30,7 +30,13 @@ function buildManager() {
       'statistic.js',
       'build.js',
       'todo.txt'
-    ]
+    ],
+    afterCopy: [(buildPath, electronVersion, platform, arch, callback) => {
+    console.log('\tRebuilding native modules...')
+    rebuild.rebuild({ buildPath, electronVersion, arch })
+      .then(() => callback())
+      .catch((error) => callback(error));
+  }]
   }
 
   if(process.argv[2] == '--all') {
