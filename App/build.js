@@ -12,7 +12,7 @@ function buildManager() {
     dir: './',
     all: false,
     appCopyright: 'Copyright (C) 2017 flofriday',
-    arch: 'all',
+    arch: 'x64',
     icon: './img/icon',
     name: 'pixelFlow',
     out: './build',
@@ -40,7 +40,7 @@ function buildManager() {
   }
 
   if(process.argv[2] == '--all') {
-    options.all = true
+    options.platform = 'all'
   }
   else if (process.argv[2] == '--darwin') {
     options.platform = 'darwin'
