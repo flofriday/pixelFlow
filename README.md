@@ -8,7 +8,7 @@
   <p align="center">
     The open source platform for 16x16 pixel displays.
     <br>
-    <a href="#status">Alpha-Stage</a>
+    <a href="#status">Beta-Stage</a>
     &middot;
     <a href="https://www.github.com/flofriday">flofriday</a>
   </p>
@@ -25,18 +25,21 @@
 - [License](#license)
 
 ## Quick Start
-This platform is currently in an beta version so at the moment there
-isn't anyway to start right away.
+Currently there is a [release](https://github.com/flofriday/pixelFlow/releases) for Windows users. Other platforms will come soon.
+
+**You must also download the Arduino folder from the release when you want to control the hardware!**
 
 ### For Developers
-1. Download this repository.
-2. Go into the folder "Arduino" and upload the Code on an Arduino Mega.
-3. Go into the folder "App" and run `npm install`.
+1. Open your favorite Terminal.
+2. Download this repository `git https://github.com/flofriday/pixelFlow.git`.
+3. Go into the folder "App" `cd App` and run `npm install`.
 4. Start the Software with `npm start`.
+5. Go into the folder "Arduino" and upload the Code on an Arduino Mega.
 
 ## Status
-This project is still in progress, so some features are missing. However, you
-can already use it.
+This project is almost done. There are only some binaries and documentation misssing. Sure some features are missing but for now this project won't get any new features.
+
+Feel free to write your own code and features and contribute it.
 
 ## Communication
 Documentation for the communication will come soon.
@@ -50,7 +53,10 @@ Linux. Currently it can only communicate with the Ardunio over USB.
 Documentation for the hardware will come soon.
 
 ## Contribute
-Feel free to write issues.
+Feel free to write issues and submit pull requests.
+
+There aren't any style guides right now, please try to catch my style.
+And format it with tabs.
 
 ## License
 The whole platform is licensed under the [MIT License](LICENSE).
