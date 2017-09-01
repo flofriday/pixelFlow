@@ -9,7 +9,8 @@
     "dependencies": {
         "electron": "^1.4.15",
         "electron-window-state": "^4.1.1",
-        "electron-settings": "^3.1.1"
+        "electron-settings": "^3.1.1",
+        "serialport": "^5.0.0"
     },
     "repository": {
         "type": "git",
