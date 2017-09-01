@@ -213,6 +213,10 @@ var viewMenu = {
       click() {matrix.toggleGrid()}
     },
     {
+      label: 'Toggle Round Pixel',
+      click() {matrix.toggleRoundPixel()}
+    },
+    {
       type: 'separator'
     },
     {

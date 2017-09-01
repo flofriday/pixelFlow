@@ -127,6 +127,7 @@ function Create2DArray(rows) {
 var pixelNumber = 16
 var pixelBorder = 2
 var pixelGrid = true
+var pixelRound = false
 var pixelList = Create2DArray(pixelNumber)
 spawnPixel()
 function Pixel (color) {
@@ -187,19 +188,45 @@ function toggleGrid() {
   pixelGrid = !pixelGrid
 }
 
+function toggleRoundPixel() {
+ pixelRound = !pixelRound
+}
+
 function drawPixel() {
+
+  var recWidth = canvas.width / pixelNumber
+  var recHeight = canvas.height / pixelNumber
+
   for (var c = 0; c < pixelNumber; c++) {
     for (var r = 0; r < pixelNumber; r++) {
+
       ctx.beginPath()
-      ctx.rect(c * (canvas.width / pixelNumber), r * (canvas.height / pixelNumber), canvas.width / pixelNumber, canvas.height / pixelNumber)
-      ctx.fillStyle = pixelList[c][r].color
+      ctx.rect(c * recWidth, r * recHeight, recWidth, recHeight)
+
+      // Normal pixel
+      if(pixelRound === false) {
+        ctx.fillStyle = pixelList[c][r].color
+      } else {
+        ctx.fillStyle = '#000000'
+      }
       ctx.fill()
+
+      // Grid
       if (pixelGrid) {
         ctx.lineWidth="2"
         ctx.strokeStyle="#999999"
         ctx.stroke()
       }
       ctx.closePath()
+
+      // Round Pixel
+      if (pixelRound) {
+        ctx.beginPath()
+        ctx.arc( (c * recWidth) + (recWidth / 2 ) , (r * recHeight) + (recHeight / 2 ) , (recWidth / 2) - 2, 0, 2*Math.PI)
+        ctx.fillStyle = pixelList[c][r].color
+        ctx.fill()
+        ctx.closePath()
+      }
     }
   }
 
@@ -241,3 +268,4 @@ module.exports.getContent = getContent
 module.exports.loadContent = loadContent
 module.exports.getPixelList = getPixelList
 module.exports.toggleGrid = toggleGrid
+module.exports.toggleRoundPixel = toggleRoundPixel
