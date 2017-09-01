@@ -1,0 +1,23 @@
+{
+    "name": "pixelFlow",
+    "description": "The open source platform for 16x16 pixel displays",
+    "version": "0.1.0",
+    "main": "App/app.js",
+    "scripts": {
+        "start": "electron ."
+    },
+    "dependencies": {
+        "electron": "^1.4.15",
+        "electron-window-state": "^4.1.1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/flofriday/pixelFlow"
+    },
+    "maintainers": [{
+        "name": "flofriday",
+        "email": "flohacksfriday@gmail.com"
+    }],
+    "license": "MIT",
+    "author": "flofriday"
+}
