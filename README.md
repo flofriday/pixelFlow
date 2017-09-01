@@ -25,7 +25,7 @@
 - [License](#license)
 
 ## Quick Start
-Currently there is a [release](https://github.com/flofriday/pixelFlow/releases) for Windows users. Other platforms will come soon.
+Currently, there is a [release](https://github.com/flofriday/pixelFlow/releases) for Windows users. Other platforms will come soon.
 
 **You must also download the Arduino folder from the release when you want to control the hardware!**
 
@@ -37,7 +37,7 @@ Currently there is a [release](https://github.com/flofriday/pixelFlow/releases) 
 5. Go into the folder "Arduino" and upload the Code on an Arduino Mega.
 
 ## Status
-This project is almost done. There are only some binaries and documentation misssing. Sure some features are missing but for now this project won't get any new features.
+This project is almost done. There are only some binaries and documentation missing. Sure some features are missing but for now this project won't get any new features.
 
 Feel free to write your own code and features and contribute it.
 
@@ -46,8 +46,10 @@ Documentation for the communication will come soon.
 
 ## Software
 !["Picture of Software"](Images/software.png)
-The Software is build with Electron, therefore it runs on macOS, Windows and
-Linux. Currently it can only communicate with the Ardunio over USB.
+
+
+The Software is built with Electron, therefore it runs on macOS, Windows and
+Linux. Currently, it can only communicate with the Arduino over USB.
 
 ## Hardware
 Documentation for the hardware will come soon.
@@ -61,6 +63,6 @@ And format it with tabs.
 ## License
 The whole platform is licensed under the [MIT License](LICENSE).
 
-This License is also used for the Firmware and Software with only one exception.
+This License is also used for the Firmware(Arduino) and Software with only one exception.
 The file `App/js/html5kellycolorpicker.min.js` is licensed under GPLv3 and was
 written by ["NC22"](https://github.com/NC22/HTML5-Color-Picker).
