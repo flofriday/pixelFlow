@@ -15,6 +15,7 @@ const fs = require('fs')
 const path = require('path')
 const shell = electron.shell
 const settings = require('electron-settings')
+const ipc = electron.ipcRenderer
 
 /*
 * All DOM related stuff
@@ -68,11 +69,12 @@ var packList = []
 var packSelected = 0
 var packDefaultName = "New File"
 var packDefaultPath = null
+var packDefaultIsSaved = false
 var packDefaultBrightness = 40
 var packDefaultSelected = 0
 var packDefaultType = "Picture"
 var packDefaultFrameList = frame.getDefaultFrameList()
-function Pack(name, path, brightness, selectedFrame, type, frameList) {
+function Pack(name, path, isSaved, brightness, selectedFrame, type, frameList) {
   this.name = name
   this.path = path
   this.brightness = brightness
@@ -123,6 +125,7 @@ function saveAsFile() {
       {
         packList[index].name = path.basename(fileName, '.pixelflow')
         packList[index].path = fileName
+        packList[index].isSaved = true
         biu('Saved successfully.', {type: 'success', pop: true, el: document.getElementById('window')})
 
         // Update the settings
@@ -165,6 +168,7 @@ function saveFile() {
     {
       packList[index].name = path.basename(fileName, '.pixelflow')
       packList[index].path = fileName
+      packList[index].isSaved = true
       biu('Saved successfully.', {type: 'success', pop: true, el: document.getElementById('window')})
 
       // Update the settings
@@ -225,7 +229,7 @@ function loadFile(fileName) {
       }
 
       var newPackId = packSelected + 1
-      var newPack = new Pack(name, fileName, obj.brightness, packDefaultSelected, type, obj.frameList)
+      var newPack = new Pack(name, fileName, true, obj.brightness, packDefaultSelected, type, obj.frameList)
       packList.splice(newPackId, 0, newPack)
       spawnPackUI(newPackId, newPack.name, type)
       changeSelectedPack(newPackId)
@@ -262,7 +266,7 @@ function loadFirstFile (fileName) {
       }
 
       var newPackId = 0
-      var newPack = new Pack(name, fileName, obj.brightness, packDefaultSelected, type, obj.frameList)
+      var newPack = new Pack(name, fileName, true, obj.brightness, packDefaultSelected, type, obj.frameList)
       packList.push(newPack)
       spawnPackUI(newPackId, newPack.name, type)
       packSelected = 0
@@ -275,10 +279,18 @@ function loadFirstFile (fileName) {
 }
 
 function updatePack() {
+  var oldPack = JSON.stringify(packList[packSelected]);
   packList[packSelected].name = packUIContainer.children[packSelected].children[1].children[0].innerText
   packList[packSelected].brightness = inputBrightness.valueAsNumber
   packList[packSelected].frameList = frame.getFrameList()
   packList[packSelected].selectedFrame = frame.getframeSelected()
+
+
+  newPack = JSON.stringify(packList[packSelected]);
+  if (oldPack !== newPack) {
+    packList[packSelected].isSaved = false
+    console.log('Not the same')
+  }
 
   // Delete Path when renamed
   if (packList[packSelected].path != null) {
@@ -297,12 +309,12 @@ function showPack() {
 
 function spawnPack() {
   spawnPackUI(packUIContainer.children.length, packDefaultName, packDefaultType)
-  packList[packList.length] = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, packDefaultSelected, packDefaultType, frame.getDefaultFrameList())
+  packList[packList.length] = new Pack(packDefaultName, packDefaultPath, packDefaultIsSaved, packDefaultBrightness, packDefaultSelected, packDefaultType, frame.getDefaultFrameList())
   showPack()
 }
 
 function addCurPack() {
-  var newPack = new Pack(packDefaultName, packDefaultPath, packDefaultBrightness, packDefaultSelected, packDefaultType, frame.getDefaultFrameList())
+  var newPack = new Pack(packDefaultName, packDefaultPath, packDefaultIsSaved, packDefaultBrightness, packDefaultSelected, packDefaultType, frame.getDefaultFrameList())
   packList.splice(packSelected + 1, 0, newPack)
   spawnPackUI(packSelected + 1, packDefaultName, packDefaultType)
   changeSelectedPack(packSelected + 1)
@@ -312,6 +324,7 @@ function copyCurPack() {
   updatePack()
   var newPack = JSON.parse(JSON.stringify(packList[packSelected]));
   newPack.path = null // The new copy can't have the same path
+  newPack.isSaved = false
   packList.splice(packSelected + 1, 0, newPack)
   spawnPackUI(packSelected + 1, packDefaultName, packDefaultType)
   changeSelectedPack(packSelected + 1)
@@ -391,6 +404,20 @@ function getAllFilesPaths() {
   return out
 }
 
+// Returns a bool wether or not all files are saved
+function areAllFilesSaved() {
+  updatePack()
+  for (var i = 0; i < packList.length; i++) {
+    if (packList[i].path == null || packList[i].isSaved === false)  {
+      // At least one file is unsaved
+      console.log(packList[i])
+      return false
+    }
+  }
+  // All files are saved
+  return true
+}
+
 // Tries to open the files saved in the settings
 function startup() {
   var found = false
@@ -421,6 +448,12 @@ module.exports.closeFile = deleteCurPack
 module.exports.copyFile = copyCurPack
 module.exports.showInManager = showInManager
 module.exports.setTypeCurPack = setTypeCurPack
+module.exports.areAllFilesSaved = areAllFilesSaved
 
+// IPC communication
+ipc.on('files-saved-request', function(event, arg) {
+  console.log()
+   event.sender.send('files-saved-reply', areAllFilesSaved())
+})
 
 startup()

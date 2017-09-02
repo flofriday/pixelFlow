@@ -6,6 +6,8 @@ const app = electron.app
 const os = require('os')
 const BrowserWindow = electron.BrowserWindow
 const windowStateKeeper = require('electron-window-state')
+const dialog = electron.dialog
+const ipc = electron.ipcMain
 
 /*
 * Keep a global reference of the window object, if you don't, the window will
@@ -72,6 +74,37 @@ function createWindow () {
 
   // open dev tools (you can do this also in html, only use it here if render.js breaks)
   //mainWindow.webContents.openDevTools()
+
+  // Emitted before closed
+  mainWindow.on('close', function (e) {
+    // ask the renderer for files are saved
+    mainWindow.webContents.send('files-saved-request')
+
+    var noIdea = this
+
+    // prevent closing window
+    e.preventDefault();
+
+    ipc.once('files-saved-reply', function (event, isSaved) {
+      // Ceck if is saved if so no need to display warning
+      if (isSaved === true) { mainWindow.destroy(); return}
+
+      //Ask to save
+      var result = dialog.showMessageBox(noIdea,
+        {
+          type: 'warning',
+          noLink: true,
+          title: 'Unsaved File(s)',
+          message: 'At least one File is unsaved.\nDo you want to go back and save ?',
+          buttons: ['Save', 'Exit']
+        })
+        if (result == 1){
+          // close window
+          // TODO: I think destroy() is a too brutal method
+          mainWindow.destroy()
+        }
+      })
+    })
 
 
   // Emitted when the window is closed.
