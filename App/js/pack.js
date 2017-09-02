@@ -279,23 +279,23 @@ function loadFirstFile (fileName) {
 }
 
 function updatePack() {
-  var oldPack = JSON.stringify(packList[packSelected]);
-  packList[packSelected].name = packUIContainer.children[packSelected].children[1].children[0].innerText
-  packList[packSelected].brightness = inputBrightness.valueAsNumber
-  packList[packSelected].frameList = frame.getFrameList()
-  packList[packSelected].selectedFrame = frame.getframeSelected()
+  var index = packSelected
+  var oldPack = JSON.stringify(packList[index]);
+  packList[index].name = packUIContainer.children[index].children[1].children[0].innerText
+  packList[index].brightness = inputBrightness.valueAsNumber
+  packList[index].frameList = frame.getFrameList()
+  packList[index].selectedFrame = frame.getframeSelected()
 
 
-  newPack = JSON.stringify(packList[packSelected]);
+  newPack = JSON.stringify(packList[index]);
   if (oldPack !== newPack) {
-    packList[packSelected].isSaved = false
-    console.log('Not the same')
+    packList[index].isSaved = false
   }
 
   // Delete Path when renamed
-  if (packList[packSelected].path != null) {
-    if (packList[packSelected].name !== path.basename(packList[packSelected].path, '.pixelflow')) {
-      packList[packSelected].path = null
+  if (packList[index].path != null) {
+    if (packList[index].name !== path.basename(packList[index].path, '.pixelflow')) {
+      packList[index].path = null
     }
   }
 }
@@ -410,7 +410,6 @@ function areAllFilesSaved() {
   for (var i = 0; i < packList.length; i++) {
     if (packList[i].path == null || packList[i].isSaved === false)  {
       // At least one file is unsaved
-      console.log(packList[i])
       return false
     }
   }
@@ -432,6 +431,7 @@ function startup() {
 
   // Update the settings
   settings.set('fileList.open', getAllFilesPaths())
+  console.log(getAllFilesPaths())
 
   if (found === false) {
     // spawn one pack
@@ -452,7 +452,6 @@ module.exports.areAllFilesSaved = areAllFilesSaved
 
 // IPC communication
 ipc.on('files-saved-request', function(event, arg) {
-  console.log()
    event.sender.send('files-saved-reply', areAllFilesSaved())
 })
 
