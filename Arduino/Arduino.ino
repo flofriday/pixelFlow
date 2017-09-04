@@ -1,11 +1,10 @@
 /*
 * Author: flofriday
-* Date: 28.07.2017
+* Date: 04.09.2017
 * License: MIT
 *
 * This file is the code for the Arduino.
-* Supported are Arduino Uno and Arduino Mega however, alomost every Arduino
-* should work.
+* Tested only on the Arduino Mega. Other Arduinos may work.
 */
 
 
@@ -14,7 +13,7 @@
 */
 #define MATRIX_DATA_PIN 6       // The Pin where the matrix is connected to.
 #define MATRIX_SNAKE_PATTERN 1  // Set 1 if the Matrix has a snake-pattern.
-#define MAX_BRIGHTNESS 50       // The maximum brightness the firmware allow.
+#define MAX_BRIGHTNESS 64       // The maximum brightness the firmware allow.
 #define BAUDRATE 250000         // Set the Baudrate (higher is better)
 
 
@@ -30,7 +29,13 @@
 * Define the LED Matrix.
 */
 Adafruit_NeoPixel strip = Adafruit_NeoPixel(256, MATRIX_DATA_PIN, NEO_GRB + NEO_KHZ800);
+uint8_t matrixBrightness = MAX_BRIGHTNESS;
 
+/*
+* Define the pixel list.
+* In this list the raw colors are saved without the brightness
+*/
+uint8_t pixelList[256][3];
 
 /*
 * Setup the Matrix and the serial communication.
@@ -38,7 +43,7 @@ Adafruit_NeoPixel strip = Adafruit_NeoPixel(256, MATRIX_DATA_PIN, NEO_GRB + NEO_
 void setup()
 {
   strip.begin();
-  strip.setBrightness(MAX_BRIGHTNESS);
+  strip.setBrightness(255); // Set the strip to the max brightness possible, because we have our own brightness logic
   strip.show();
   Serial.begin(BAUDRATE);
 }
@@ -59,10 +64,58 @@ void setup()
 
 /*
 * All variables needed to work with the buffer.
+* The buffer is a space where all incomming serial bytes are saved.
 */
 #define BUFFER_SIZE 1600
 char buffer[BUFFER_SIZE] = "";
 uint16_t bufferLength = 0;
+
+
+
+/*
+* This function applys the brightness to the colors given as input
+* and returns the output.
+*/
+uint8_t * applyBrightness(uint8_t input[], uint8_t output[]) {
+  // Convert all input variables to floats so the program can claculate with floating numbers.
+	float endValue = 255;
+	float endResult[3];
+	float result;
+
+
+	// Making a loop because the whole code below has to be done with every color.
+	for (uint8_t i = 0; i < 3; i++)
+	{
+		// Making the colors to floats
+		endResult[i] = input[i];
+
+		// Calculate the result
+    result = (float)matrixBrightness * ((float) input[i] / 255.0);
+
+		// Creating the output array
+		output[i] = (uint8_t) result;
+	}
+}
+
+
+/*
+* This function is a wrapper for strip.show()
+* However, it also adds the brightness because the standart brightness function
+* of the neopixel libary interpolates soo poorly.
+*/
+void matrixShow() {
+
+  // copy the pixelList into the strip and apply the brightness
+  for (uint16_t i = 0; i < 256; i++)
+  {
+    uint8_t result[3];
+    applyBrightness(pixelList[i], result);
+    strip.setPixelColor(i, result[0], result[1], result[2]);
+  }
+
+  // show the strip
+  strip.show();
+}
 
 
 /*
@@ -92,8 +145,8 @@ void setBrightness()
   }
 
   // The command was correct so set the brightness of the strip
-  strip.setBrightness(brightness);
-  strip.show();
+  matrixBrightness = brightness;
+  matrixShow();
 }
 
 
@@ -158,8 +211,10 @@ void drawPixel()
   blue = (uint8_t)strtol(strBlue, NULL, 16);
 
   // Set the pixel color and update the matrix.
-  strip.setPixelColor(stripPixel, red, green, blue);
-  strip.show();
+  pixelList[stripPixel][0] = red;
+  pixelList[stripPixel][1] = green;
+  pixelList[stripPixel][2] = blue;
+  matrixShow();
 }
 
 
@@ -218,12 +273,14 @@ void drawFrame()
       blue = (int)strtol(strBlue, NULL, 16);
 
       // Set the current pixel
-      strip.setPixelColor(curPixel, red, green, blue);
+      pixelList[curPixel][0] = red;
+      pixelList[curPixel][1] = green;
+      pixelList[curPixel][2] =  blue;
     }
   }
 
   // Update the matrix
-  strip.show();
+  matrixShow();
 }
 
 
