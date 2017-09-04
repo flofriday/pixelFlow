@@ -15,8 +15,8 @@ function onOpen() {
 }
 
 function onData(data) {
-  console.log(`Received:\t${data}`);
-  console.log(`Read Events:\t${byteCount}`);
+  // error because all messages from the device are error messages
+  console.error(`Received from USB:\t${data}`);
 }
 
 function onClose() {
@@ -51,7 +51,7 @@ function connect(path) {
   settings.set('usbConnected', path)
 
   port.on('open', onOpen);
-  //port.on('data', onData);
+  port.on('data', onData);
   port.on('close', onClose);
   port.on('error', onError);
 }

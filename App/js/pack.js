@@ -303,6 +303,7 @@ function updatePack() {
 function showPack() {
   packUIContainer.children[packSelected].children[1].children[0].innerText = packList[packSelected].name
   inputBrightness.value = packList[packSelected].brightness
+  hardware.updateBrightness(getBrightness())
   frame.loadFrameList(packList[packSelected].frameList)
   frame.changeSelectedFrame(packList[packSelected].selectedFrame)
 }
@@ -417,6 +418,11 @@ function areAllFilesSaved() {
   return true
 }
 
+// Return the brightness
+function getBrightness() {
+  return packList[packSelected].brightness
+}
+
 // Tries to open the files saved in the settings
 function startup() {
   var found = false
@@ -428,10 +434,6 @@ function startup() {
       found = true
     }
   }
-
-  // Update the settings
-  settings.set('fileList.open', getAllFilesPaths())
-  console.log(getAllFilesPaths())
 
   if (found === false) {
     // spawn one pack
@@ -449,6 +451,7 @@ module.exports.copyFile = copyCurPack
 module.exports.showInManager = showInManager
 module.exports.setTypeCurPack = setTypeCurPack
 module.exports.areAllFilesSaved = areAllFilesSaved
+module.exports.getBrightness = getBrightness
 
 // IPC communication
 ipc.on('files-saved-request', function(event, arg) {
