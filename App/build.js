@@ -24,19 +24,19 @@ function buildManager() {
       OriginalFilename: 'pixelFlow.exe',
       ProductName: 'pixelFlow',
       InternalName: 'pixelFlow'
-    },
+    },/*
     ignore: [
       'photon.css',
       'statistic.js',
       'build.js',
       'todo.txt'
-    ],
+    ],*/
     afterCopy: [(buildPath, electronVersion, platform, arch, callback) => {
-    console.log('\tRebuilding native modules...')
-    rebuild.rebuild({ buildPath, electronVersion, arch })
+      console.log('\tRebuilding native modules...')
+      rebuild.rebuild({ buildPath, electronVersion, arch })
       .then(() => callback())
       .catch((error) => callback(error));
-  }]
+    }]
   }
 
   if(process.argv[2] == '--all') {

@@ -1,8 +1,9 @@
 /*
 * Load Modules
 */
-const colorpicker = require('../js/colorpicker')
 const hardware = require('../js/hardware')
+const colorpicker = require('../js/colorpicker')
+
 
 /*
 * Include DOM objects

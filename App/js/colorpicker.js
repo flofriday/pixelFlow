@@ -1,6 +1,3 @@
-module.exports.start = start
-module.exports.setColor = setColor
-
 const matrix = require('../js/mainmatrix')
 
 var picker
@@ -26,3 +23,6 @@ function start () {
   picker.addUserEvent("change",  updateSelectedColor)
   matrix.setColor(picker.getCurColorHex())
 }
+
+module.exports.start = start
+module.exports.setColor = setColor

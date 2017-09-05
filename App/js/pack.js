@@ -1,9 +1,4 @@
 /*
-* Export the module
-*/
-module.exports.loadFile = loadFile
-
-/*
 * Include all needed modules
 */
 const frame = require('../js/frame')
@@ -441,6 +436,7 @@ function startup() {
   }
 }
 
+module.exports.loadFile = loadFile
 module.exports.newFile = addCurPack
 module.exports.openFile = openFile
 module.exports.saveFile = saveFile
