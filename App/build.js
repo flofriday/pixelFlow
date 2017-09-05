@@ -24,13 +24,17 @@ function buildManager() {
       OriginalFilename: 'pixelFlow.exe',
       ProductName: 'pixelFlow',
       InternalName: 'pixelFlow'
-    },/*
+    },
     ignore: [
       'photon.css',
       'statistic.js',
       'build.js',
-      'todo.txt'
-    ],*/
+      'todo.txt',
+      'build',
+      'ubuntu-build.sh',
+      'ubuntu-dependencies.sh',
+      'ubuntu-download-build.sh'
+    ],
     afterCopy: [(buildPath, electronVersion, platform, arch, callback) => {
       console.log('\tRebuilding native modules...')
       rebuild.rebuild({ buildPath, electronVersion, arch })
@@ -39,22 +43,17 @@ function buildManager() {
     }]
   }
 
-  if(process.argv[2] == '--all') {
-    options.platform = 'all'
+  var platform = process.argv[2];
+  platform = platform.slice(2)
+
+  /*
+  * Crosscompiling of native modules is not possible.
+  */
+  if (platform !== process.platform) {
+    console.error('Sry crosscompiling is not possible with native modules')
+    process.exit()
   }
-  else if (process.argv[2] == '--darwin') {
-    options.platform = 'darwin'
-  }
-  else if (process.argv[2] == '--win32') {
-    options.platform = 'win32'
-  }
-  else if (process.argv[2] == '--linux') {
-    options.platform = 'linux'
-  }
-  else {
-    console.log('ERROR: Unknown parameter for build platform')
-    return
-  }
+
 
   // Start the package
   packager(options, function done_callback (err, appPaths) {
