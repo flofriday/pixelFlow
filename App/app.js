@@ -75,6 +75,9 @@ function createWindow () {
   // open dev tools (you can do this also in html, only use it here if render.js breaks)
   //mainWindow.webContents.openDevTools()
 
+  // a countdown when the js in the renderer process chrased
+  var killCountdown
+
   // Emitted before closed
   mainWindow.on('close', function (e) {
     // ask the renderer for files are saved
@@ -82,10 +85,16 @@ function createWindow () {
 
     var noIdea = this
 
+    // start a coutdown in  case the render process died and won't respond
+    killCountdown = setTimeout(() => {mainWindow.destroy()}, 3000)
+
     // prevent closing window
     e.preventDefault();
 
     ipc.once('files-saved-reply', function (event, isSaved) {
+      // Clear the countdown
+      clearTimeout(killCountdown)
+
       // Ceck if is saved if so no need to display warning
       if (isSaved === true) { mainWindow.destroy(); return}
 
