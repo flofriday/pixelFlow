@@ -425,7 +425,12 @@ function startup() {
 
   for (var i = 0; i < fileList.length; i++) {
     if (fs.existsSync(fileList[i]) === true) {
-      i == 0 ? loadFirstFile(fileList[i]) : loadFile(fileList[i])
+      if (packList.length === 0) {
+        loadFirstFile(fileList[i])
+       }
+       else{
+         loadFile(fileList[i])
+    }
       found = true
     }
   }
