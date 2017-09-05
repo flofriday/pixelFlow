@@ -2,7 +2,6 @@ const settings = require('electron-settings')
 const usb = require('../js/usb')
 //const bluetooth = require('../js/bluetooth')
 const matrix = require('../js/mainmatrix')
-const pack = require('../js/pack')
 
 var connection = null;
 
@@ -23,7 +22,6 @@ function toggleLiveUpdate() {
     liveUpdate = true
     settings.set('player.isLiveUpdate', true)
     btnLiveUpdate.classList.add('active')
-    updateBrightness(pack.getBrightness())
     updateFrame(matrix.getPixelList())
   }
 }
@@ -129,10 +127,7 @@ startup()
 ipc.on('connect-usb', (event, input) => {
   connection = 'usb'
   usb.connect(input)
-  if (liveUpdate == true) {
-    updateBrightness(pack.getBrightness())
-    updateFrame(matrix.getPixelList())
-  }
+  if (liveUpdate == true) {updateFrame(matrix.getPixelList())}
 })
 
 module.exports.updatePixel = updatePixel
