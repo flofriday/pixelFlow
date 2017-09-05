@@ -96,7 +96,7 @@ function createWindow () {
           noLink: true,
           title: 'Unsaved File(s)',
           message: 'At least one File is unsaved.\nDo you want to go back and save ?',
-          buttons: ['Save', 'Exit']
+          buttons: ['Return to Save', 'Exit']
         })
         if (result == 1){
           // close window
